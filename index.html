@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio - Glassmorphism 3D</title>
+    <style>
+        /* --- ESTILOS GENERALES (Fondo Negro) --- */
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #0a0a0a; /* Negro profundo */
+            color: white;
+            font-family: 'Poppins', sans-serif; /* Tipografía moderna */
+            overflow-x: hidden;
+        }
+
+        /* --- Fondo 3D Abstracto (Luces de fondo) --- */
+        .fondo-3d {
+            position: fixed;
+            width: 100vw;
+            height: 100vh;
+            top: 0;
+            left: 0;
+            z-index: -1;
+            filter: blur(80px); /* Desenfoque para las luces */
+            opacity: 0.5;
+        }
+        .circulo {
+            position: absolute;
+            border-radius: 50%;
+        }
+        .c1 { width: 400px; height: 400px; background: #8e44ad; top: -100px; right: -100px; } /* Violeta */
+        .c2 { width: 350px; height: 350px; background: #3498db; bottom: -50px; left: -100px; } /* Azul */
+
+        /* --- HEADER --- */
+        header {
+            text-align: center;
+            padding: 80px 20px;
+        }
+        header h1 { font-size: 3em; text-transform: uppercase; letter-spacing: 3px; margin-bottom: 10px; }
+        header p { font-weight: 300; opacity: 0.8; }
+
+        /* --- GRILLA DE CATEGORÍAS --- */
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            padding: 20px 50px 100px 50px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* --- EFECTO GLASSMORPHISM EN TARJETAS --- */
+        .categoria-card {
+            position: relative;
+            height: 350px;
+            border-radius: 20px;
+            overflow: hidden;
+            
+            /* -- EL SECRETO DEL GLASS -- */
+            background: rgba(255, 255, 255, 0.05); /* Fondo muy traslúcido */
+            backdrop-filter: blur(10px); /* Desenfoque del fondo */
+            -webkit-backdrop-filter: blur(10px);
+            
+            /* -- Borde de Luz y Sombra 3D -- */
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+            
+            transition: all 0.4s ease; /* Animación suave */
+            cursor: pointer;
+            z-index: 1;
+        }
+
+        /* --- EFECTO HOVER (Al pasar el mouse, efecto 3D) --- */
+        .categoria-card:hover {
+            transform: translateY(-10px) scale(1.02); /* Se eleva y agranda */
+            border: 1px solid rgba(255, 255, 255, 0.3); /* Brilla más el borde */
+            box-shadow: 0 15px 45px 0 rgba(255, 255, 255, 0.1);
+        }
+
+        /* --- IMAGEN DE FONDO DE LA TARJETA --- */
+        .card-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: -1;
+            opacity: 0.6; /* Un poco oscura para que se lea el texto */
+            transition: opacity 0.4s ease;
+        }
+        .categoria-card:hover .card-img {
+            opacity: 0.9; /* Se ilumina la foto al hover */
+        }
+
+        /* --- TEXTO DENTRO DE LA TARJETA --- */
+        .card-content {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 30px;
+            background: linear-gradient(to top, rgba(0,0,0,0.8), transparent); /* Degradado para legibilidad */
+            box-sizing: border-box;
+        }
+        .card-content h3 { margin: 0; font-size: 1.5em; text-transform: uppercase; }
+        .card-content p { margin: 5px 0 0 0; font-weight: 300; font-size: 0.9em; opacity: 0.7; }
+
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <div class="fondo-3d">
+        <div class="circulo c1"></div>
+        <div class="circulo c2"></div>
+    </div>
+
+    <header>
+        <h1>Nuestra Mirada</h1>
+        <p>Portfolio por Agustina Valderrama & Araceli Villalba</p>
+    </header>
+
+    <div class="grid-container">
+        <div class="categoria-card">
+            <img src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?q=80&w=800" alt="Casamientos" class="card-img">
+            <div class="card-content">
+                <h3>El Gran Día</h3>
+                <p>Historias de amor eternas</p>
+            </div>
+        </div>
+
+        <div class="categoria-card">
+            <img src="https://images.unsplash.com/photo-1566737236500-c8ac40027529?q=80&w=800" alt="Quince Años" class="card-img">
+            <div class="card-content">
+                <h3>Mis 15</h3>
+                <p>Tu esencia, tu fiesta</p>
+            </div>
+        </div>
+
+        <div class="categoria-card">
+            <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?q=80&w=800" alt="Fotoproducto" class="card-img">
+            <div class="card-content">
+                <h3>Branding Visual</h3>
+                <p>Fotografía de producto profesional</p>
+            </div>
+        </div>
+        
+        </div>
+
+</body>
+</html>
