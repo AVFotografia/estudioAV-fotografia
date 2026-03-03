@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Infantiles - Nuestra Mirada</title>
+    <style>
+        body {
+            margin: 0; padding: 0;
+            background-color: #0a0a0a;
+            color: white;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        /* Fondo 3D coherente con el resto del sitio */
+        .fondo-3d {
+            position: fixed; width: 100vw; height: 100vh;
+            top: 0; left: 0; z-index: -1;
+            filter: blur(80px); opacity: 0.3;
+        }
+        .circulo { position: absolute; border-radius: 50%; }
+        .c1 { width: 400px; height: 400px; background: #8e44ad; top: -100px; right: -100px; }
+        .c2 { width: 350px; height: 350px; background: #3498db; bottom: -50px; left: -100px; }
+
+        header { text-align: center; padding: 60px 20px 40px; }
+        header h1 { font-size: 2.5em; text-transform: uppercase; letter-spacing: 5px; margin-bottom: 20px; }
+        
+        .btn-volver {
+            text-decoration: none;
+            color: rgba(255,255,255,0.6);
+            border: 1px solid rgba(255,255,255,0.2);
+            padding: 10px 25px;
+            border-radius: 50px;
+            transition: 0.3s;
+            font-size: 0.8em;
+            letter-spacing: 2px;
+            backdrop-filter: blur(10px);
+        }
+        .btn-volver:hover { background: white; color: black; }
+
+        .galeria-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 40px;
+            padding: 0 50px 100px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .foto-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(15px);
+            border-radius: 25px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            overflow: hidden;
+            transition: 0.4s;
+            display: none; 
+        }
+
+        .foto-card.visible { display: block; }
+
+        .foto-card:hover {
+            transform: translateY(-10px);
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+
+        .foto-card img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .foto-info {
+            padding: 15px 20px;
+            background: rgba(0, 0, 0, 0.4);
+        }
+
+        .firma {
+            display: block;
+            font-size: 0.75em;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: #3498db;
+            font-weight: 600;
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <div class="fondo-3d">
+        <div class="circulo c1"></div>
+        <div class="circulo c2"></div>
+    </div>
+
+    <header>
+        <a href="index.html" class="btn-volver">← VOLVER</a>
+        <h1>INFANTILES</h1>
+    </header>
+
+    <div class="galeria-grid" id="contenedor-infantiles">
+        </div>
+
+    <script>
+        const cantidadFotos = 20;
+        // Rutas específicas para Infantiles
+        const rutaAgus = "Imagenes/Infantiles/Agustina/";
+        const rutaAra = "Imagenes/Infantiles/Araceli/";
+        const contenedor = document.getElementById('contenedor-infantiles');
+
+        function cargarGaleria() {
+            for (let i = 1; i <= cantidadFotos; i++) {
+                intentarCargar(rutaAgus + i + ".jpg", "Agustina Valderrama");
+                intentarCargar(rutaAra + i + ".jpg", "Araceli Villalba");
+            }
+        }
+
+        function intentarCargar(url, nombre) {
+            const img = new Image();
+            img.src = url;
+
+            img.onload = function() {
+                const card = document.createElement('div');
+                card.className = 'foto-card visible';
+                card.innerHTML = `
+                    <img src="${url}">
+                    <div class="foto-info">
+                        <span class="firma">By ${nombre}</span>
+                    </div>
+                `;
+                contenedor.appendChild(card);
+            };
+        }
+
+        cargarGaleria();
+    </script>
+
+</body>
+</html>
