@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Branding & Producto - Nuestra Mirada</title>
+    <title>Foto Producto - Nuestra Mirada</title>
     <style>
         body {
             margin: 0; padding: 0;
@@ -12,7 +12,6 @@
             font-family: 'Poppins', sans-serif;
         }
 
-        /* Fondo 3D característico */
         .fondo-3d {
             position: fixed; width: 100vw; height: 100vh;
             top: 0; left: 0; z-index: -1;
@@ -95,18 +94,18 @@
 
     <header>
         <a href="index.html" class="btn-volver">← VOLVER</a>
-        <h1>BRANDING & PRODUCTO</h1>
+        <h1>FOTO PRODUCTO</h1>
     </header>
 
-    <div class="galeria-grid" id="contenedor-branding">
+    <div class="galeria-grid" id="contenedor-fotoproducto">
         </div>
 
     <script>
         const cantidadFotos = 20;
-        // Rutas para Branding
-        const rutaAgus = "Imagenes/Branding/Agustina/";
-        const rutaAra = "Imagenes/Branding/Araceli/";
-        const contenedor = document.getElementById('contenedor-branding');
+        // AQUÍ CORREGIMOS EL NOMBRE DE LA CARPETA
+        const rutaAgus = "Imagenes/fotoproducto/Agustina/";
+        const rutaAra = "Imagenes/fotoproducto/Araceli/";
+        const contenedor = document.getElementById('contenedor-fotoproducto');
 
         function cargarGaleria() {
             for (let i = 1; i <= cantidadFotos; i++) {
