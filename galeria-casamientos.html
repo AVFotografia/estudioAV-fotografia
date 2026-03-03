@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Galería - Nuestra Mirada</title>
+    <style>
+        body {
+            margin: 0; padding: 0;
+            background-color: #0a0a0a;
+            color: white;
+            font-family: 'Poppins', sans-serif;
+            overflow-x: hidden;
+        }
+
+        /* Mantenemos el fondo 3D de la portada para coherencia visual */
+        .fondo-3d {
+            position: fixed; width: 100vw; height: 100vh;
+            top: 0; left: 0; z-index: -1;
+            filter: blur(80px); opacity: 0.3;
+        }
+        .circulo { position: absolute; border-radius: 50%; }
+        .c1 { width: 400px; height: 400px; background: #8e44ad; top: -100px; right: -100px; }
+        .c2 { width: 350px; height: 350px; background: #3498db; bottom: -50px; left: -100px; }
+
+        header { text-align: center; padding: 60px 20px 40px; }
+        header h1 { font-size: 2.5em; text-transform: uppercase; letter-spacing: 5px; margin-bottom: 20px; }
+        
+        .btn-volver {
+            text-decoration: none;
+            color: rgba(255,255,255,0.6);
+            border: 1px solid rgba(255,255,255,0.2);
+            padding: 10px 25px;
+            border-radius: 50px;
+            transition: 0.3s;
+            font-size: 0.8em;
+            letter-spacing: 2px;
+            backdrop-filter: blur(10px);
+        }
+        .btn-volver:hover { background: white; color: black; }
+
+        /* Grilla de Galería Estilo Mosaico */
+        .galeria-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 40px;
+            padding: 0 50px 100px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* Tarjeta de Foto Estilo Cristal */
+        .foto-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border-radius: 25px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            overflow: hidden;
+            transition: transform 0.4s ease, border-color 0.4s ease;
+        }
+
+        .foto-card:hover {
+            transform: translateY(-10px);
+            border-color: rgba(255, 255, 255, 0.3);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+        }
+
+        .foto-card img {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: 0.5s;
+        }
+
+        /* Descripción de la foto */
+        .foto-info {
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.4);
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .foto-info p {
+            margin: 0;
+            font-size: 0.9em;
+            font-weight: 300;
+            line-height: 1.5;
+            opacity: 0.9;
+        }
+
+        .firma {
+            display: block;
+            margin-top: 10px;
+            font-size: 0.7em;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: #3498db; /* Color destacado para la firma */
+            font-weight: 600;
+        }
+
+        /* Responsive para celulares */
+        @media (max-width: 768px) {
+            .galeria-grid { padding: 0 20px 80px; gap: 25px; }
+            header h1 { font-size: 1.8em; }
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <div class="fondo-3d">
+        <div class="circulo c1"></div>
+        <div class="circulo c2"></div>
+    </div>
+
+    <header>
+        <a href="index.html" class="btn-volver">← VOLVER</a>
+        <h1>CASAMIENTOS</h1>
+    </header>
+
+    <div class="galeria-grid">
+        
+        <div class="foto-card">
+            <img src="Imagenes/Casamientos/Agustina/foto1.jpg" alt="Casamiento">
+            <div class="foto-info">
+                <p>Capturando la luz natural del atardecer en una ceremonia mágica.</p>
+                <span class="firma">Agustina Valderrama</span>
+            </div>
+        </div>
+
+        <div class="foto-card">
+            <img src="Imagenes/Casamientos/Araceli/foto1.jpg" alt="Casamiento">
+            <div class="foto-info">
+                <p>Detalles que hacen la diferencia: los anillos y la espera.</p>
+                <span class="firma">Araceli Villalba</span>
+            </div>
+        </div>
+
+        <div class="foto-card">
+            <img src="Imagenes/Casamientos/Agustina/foto2.jpg" alt="Casamiento">
+            <div class="foto-info">
+                <p>La emoción del primer baile como esposos.</p>
+                <span class="firma">Agustina Valderrama</span>
+            </div>
+        </div>
+
+        <div class="foto-card">
+            <img src="Imagenes/Casamientos/Araceli/foto2.jpg" alt="Casamiento">
+            <div class="foto-info">
+                <p>Retrato artístico en blanco y negro.</p>
+                <span class="firma">Araceli Villalba</span>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+</html>
