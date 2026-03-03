@@ -10,10 +10,8 @@
             background-color: #0a0a0a;
             color: white;
             font-family: 'Poppins', sans-serif;
-            overflow-x: hidden;
         }
 
-        /* Mantenemos el fondo 3D de la portada para coherencia visual */
         .fondo-3d {
             position: fixed; width: 100vw; height: 100vh;
             top: 0; left: 0; z-index: -1;
@@ -39,7 +37,6 @@
         }
         .btn-volver:hover { background: white; color: black; }
 
-        /* Grilla de Galería Estilo Mosaico */
         .galeria-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
@@ -49,59 +46,44 @@
             margin: 0 auto;
         }
 
-        /* Tarjeta de Foto Estilo Cristal */
         .foto-card {
             background: rgba(255, 255, 255, 0.03);
             backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
             border-radius: 25px;
             border: 1px solid rgba(255, 255, 255, 0.1);
             overflow: hidden;
-            transition: transform 0.4s ease, border-color 0.4s ease;
+            transition: 0.4s;
+            /* Ocultar si la imagen no existe */
+            display: none; 
         }
+
+        /* Esta clase se activará solo si la imagen carga bien */
+        .foto-card.visible { display: block; }
 
         .foto-card:hover {
             transform: translateY(-10px);
             border-color: rgba(255, 255, 255, 0.3);
-            box-shadow: 0 15px 35px rgba(0,0,0,0.5);
         }
 
         .foto-card img {
             width: 100%;
             height: auto;
             display: block;
-            transition: 0.5s;
         }
 
-        /* Descripción de la foto */
         .foto-info {
             padding: 20px;
             background: rgba(0, 0, 0, 0.4);
             border-top: 1px solid rgba(255, 255, 255, 0.05);
         }
 
-        .foto-info p {
-            margin: 0;
-            font-size: 0.9em;
-            font-weight: 300;
-            line-height: 1.5;
-            opacity: 0.9;
-        }
-
         .firma {
             display: block;
-            margin-top: 10px;
-            font-size: 0.7em;
+            font-size: 0.75em;
             letter-spacing: 2px;
             text-transform: uppercase;
-            color: #3498db; /* Color destacado para la firma */
+            color: #3498db;
             font-weight: 600;
-        }
-
-        /* Responsive para celulares */
-        @media (max-width: 768px) {
-            .galeria-grid { padding: 0 20px 80px; gap: 25px; }
-            header h1 { font-size: 1.8em; }
         }
     </style>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
@@ -115,44 +97,58 @@
 
     <header>
         <a href="index.html" class="btn-volver">← VOLVER</a>
-        <h1>Quinces</h1>
+        <h1 id="titulo-galeria">QUINCES</h1>
     </header>
 
-    <div class="galeria-grid">
-        
-        <div class="foto-card">
-            <img src="Imagenes/Quinces/Agustina/foto1.jpg" alt="Quinces">
-            <div class="foto-info">
-                <p>Capturando la luz natural del atardecer en una ceremonia mágica.</p>
-                <span class="firma">Agustina Valderrama</span>
-            </div>
+    <div class="galeria-grid" id="contenedor-fotos">
         </div>
 
-        <div class="foto-card">
-            <img src="Imagenes/Quinces/Araceli/foto1.jpg" alt="Quinces">
-            <div class="foto-info">
-                <p>Detalles que hacen la diferencia: los anillos y la espera.</p>
-                <span class="firma">Araceli Villalba</span>
-            </div>
-        </div>
+    <script>
+        // CONFIGURACIÓN:
+        const cantidadFotos = 20;
+        const rutaCarpetaAgus = "Imagenes/Quinces/Agustina/";
+        const rutaCarpetaAra = "Imagenes/Quinces/Araceli/";
+        const contenedor = document.getElementById('contenedor-fotos');
 
-        <div class="foto-card">
-            <img src="Imagenes/Quinces/Agustina/foto2.jpg" alt="Quinces">
-            <div class="foto-info">
-                <p>La emoción del primer baile como esposos.</p>
-                <span class="firma">Agustina Valderrama</span>
-            </div>
-        </div>
+        function cargarFotos() {
+            // Cargar fotos de AGUSTINA
+            for (let i = 1; i <= cantidadFotos; i++) {
+                crearCard(rutaCarpetaAgus + i + ".jpg", "Agustina Valderrama");
+            }
+            // Cargar fotos de ARACELI
+            for (let i = 1; i <= cantidadFotos; i++) {
+                crearCard(rutaCarpetaAra + i + ".jpg", "Araceli Villalba");
+            }
+        }
 
-        <div class="foto-card">
-            <img src="Imagenes/Quinces/Araceli/foto2.jpg" alt="Quinces">
-            <div class="foto-info">
-                <p>Retrato artístico en blanco y negro.</p>
-                <span class="firma">Araceli Villalba</span>
-            </div>
-        </div>
+        function crearCard(ruta, fotografa) {
+            const card = document.createElement('div');
+            card.className = 'foto-card';
+            
+            const img = document.createElement('img');
+            img.src = ruta;
+            
+            // Si la imagen existe y carga, mostramos la tarjeta
+            img.onload = function() {
+                card.classList.add('visible');
+            };
 
-    </div>
+            // Si la imagen NO existe, la tarjeta se queda oculta (display: none)
+            img.onerror = function() {
+                card.remove(); 
+            };
+
+            card.innerHTML = `
+                <img src="${ruta}">
+                <div class="foto-info">
+                    <span class="firma">By ${fotografa}</span>
+                </div>
+            `;
+            contenedor.appendChild(card);
+        }
+
+        cargarFotos();
+    </script>
 
 </body>
 </html>
