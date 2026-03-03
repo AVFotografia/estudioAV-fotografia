@@ -3,80 +3,103 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Casamientos - Nuestra Mirada</title>
+    <title>Nuestra Mirada - Portfolio</title>
     <style>
+        /* --- ESTILOS GENERALES --- */
         body {
             margin: 0; padding: 0;
             background-color: #0a0a0a;
             color: white;
             font-family: 'Poppins', sans-serif;
+            overflow-x: hidden;
         }
 
-        /* Fondo 3D coherente con la portada */
+        /* --- Fondo 3D con Luces --- */
         .fondo-3d {
             position: fixed; width: 100vw; height: 100vh;
             top: 0; left: 0; z-index: -1;
-            filter: blur(80px); opacity: 0.3;
+            filter: blur(80px); opacity: 0.5;
         }
         .circulo { position: absolute; border-radius: 50%; }
         .c1 { width: 400px; height: 400px; background: #8e44ad; top: -100px; right: -100px; }
         .c2 { width: 350px; height: 350px; background: #3498db; bottom: -50px; left: -100px; }
 
-        header { text-align: center; padding: 60px 20px 40px; }
-        header h1 { font-size: 2.5em; text-transform: uppercase; letter-spacing: 5px; margin-bottom: 10px; }
-        
-        .btn-volver {
-            text-decoration: none;
-            color: rgba(255,255,255,0.6);
-            border: 1px solid rgba(255,255,255,0.2);
-            padding: 10px 25px;
-            border-radius: 50px;
-            transition: 0.3s;
-            font-size: 0.8em;
-            letter-spacing: 2px;
-        }
-        .btn-volver:hover { background: white; color: black; }
+        header { text-align: center; padding: 60px 20px 20px; }
+        header h1 { font-size: 3em; text-transform: uppercase; letter-spacing: 3px; margin-bottom: 10px; }
+        header p { font-weight: 300; opacity: 0.8; margin-bottom: 30px; }
 
-        /* Grilla de Galería */
-        .galeria-container {
+        /* --- BOTONES DE FILTRO --- */
+        .filtros { text-align: center; margin-bottom: 40px; }
+        .filter-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 12px 25px;
+            margin: 5px;
+            border-radius: 50px;
+            cursor: pointer;
+            backdrop-filter: blur(10px);
+            transition: 0.3s;
+            font-family: 'Poppins', sans-serif;
+        }
+        .filter-btn:hover, .filter-btn.active {
+            background: white;
+            color: black;
+            box-shadow: 0 0 20px rgba(255,255,255,0.2);
+        }
+
+        /* --- GRILLA --- */
+        .grid-container {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 40px;
-            padding: 0 50px 100px;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            padding: 0 50px 50px 50px;
             max-width: 1400px;
             margin: 0 auto;
         }
 
-        /* Tarjeta de Foto con Estilo Cristal */
-        .foto-card {
-            background: rgba(255, 255, 255, 0.03);
-            backdrop-filter: blur(10px);
+        /* --- GLASS CARDS --- */
+        .categoria-card {
+            position: relative;
+            height: 380px;
             border-radius: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
             overflow: hidden;
-            transition: 0.4s;
-        }
-        .foto-card:hover { transform: translateY(-5px); border-color: rgba(255,255,255,0.3); }
-
-        .foto-card img {
-            width: 100%;
-            height: auto;
-            display: block;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.4s ease;
         }
 
-        .info-foto {
-            padding: 15px 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: rgba(0,0,0,0.3);
+        .hide { display: none !important; }
+
+        .categoria-card:hover {
+            transform: translateY(-10px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
         }
 
-        .firma-autor {
-            font-size: 0.7em;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            opacity: 0.5;
+        .card-img {
+            width: 100%; height: 100%; object-fit: cover;
+            position: absolute; top: 0; left: 0; z-index: -1;
+            opacity: 0.6; transition: 0.4s;
+        }
+        .categoria-card:hover .card-img { opacity: 0.9; }
+
+        .card-content {
+            position: absolute; bottom: 0; left: 0; width: 100%;
+            padding: 25px;
+            background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
+            box-sizing: border-box;
+        }
+        .card-content h3 { margin: 0; font-size: 1.4em; color: white; }
+        .card-content p { margin: 5px 0 0; font-size: 0.85em; opacity: 0.8; letter-spacing: 1px; color: white; }
+
+        /* Contenedor de contacto */
+        .contacto-container {
+            max-width: 900px; margin: 40px auto 80px; padding: 50px 20px; 
+            background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(20px); 
+            border-radius: 40px; border: 1px solid rgba(255, 255, 255, 0.1); 
+            text-align: center; box-shadow: 0 20px 50px rgba(0,0,0,0.5);
         }
 
     </style>
@@ -90,34 +113,103 @@
     </div>
 
     <header>
-        <a href="index.html" class="btn-volver">← VOLVER AL INICIO</a>
-        <h1>CASAMIENTOS</h1>
+        <h1>Nuestra Mirada</h1>
+        <p>Portfolio por Agustina Valderrama & Araceli Villalba</p>
     </header>
 
-    <div class="galeria-container">
+    <div class="filtros">
+        <button class="filter-btn active" onclick="filterSelection('all')">Todo el Equipo</button>
+        <button class="filter-btn" onclick="filterSelection('agustina')">Agustina</button>
+        <button class="filter-btn" onclick="filterSelection('araceli')">Araceli</button>
+    </div>
+
+    <div class="grid-container">
         
-        <div class="foto-card">
-            <img src="Imagenes/Casamientos/Agustina/foto1.jpg" alt="Boda 1">
-            <div class="info-foto">
-                <span class="firma-autor">Agustina Valderrama</span>
+        <a href="https://wa.me/5491137645315?text=Hola%20Agus!%20Vi%20tus%20fotos%20de%20Casamientos%20en%20la%20web..." target="_blank" class="filter-item agustina" style="text-decoration: none;">
+            <div class="categoria-card">
+                <img src="Imagenes/Casamientos/Agustina/portada.jpg" alt="Casamientos Agustina" class="card-img">
+                <div class="card-content">
+                    <h3>Casamientos</h3>
+                    <p>MIRADA DE AGUSTINA</p>
+                </div>
             </div>
-        </div>
+        </a>
 
-        <div class="foto-card">
-            <img src="Imagenes/Casamientos/Araceli/foto1.jpg" alt="Boda 2">
-            <div class="info-foto">
-                <span class="firma-autor">Araceli Villalba</span>
+        <a href="https://wa.me/5491122863092?text=Hola%20Ara!%20Vi%20tus%20fotos%20de%20Casamientos%20en%20la%20web..." target="_blank" class="filter-item araceli" style="text-decoration: none;">
+            <div class="categoria-card">
+                <img src="Imagenes/Casamientos/Araceli/portada.jpg" alt="Casamientos Araceli" class="card-img">
+                <div class="card-content">
+                    <h3>Casamientos</h3>
+                    <p>MIRADA DE ARACELI</p>
+                </div>
             </div>
-        </div>
+        </a>
 
-        <div class="foto-card">
-            <img src="Imagenes/Casamientos/Agustina/foto2.jpg" alt="Boda 3">
-            <div class="info-foto">
-                <span class="firma-autor">Agustina Valderrama</span>
+        <a href="https://wa.me/5491137645315?text=Hola%20Agus!%20Vi%20tus%20fotos%20de%20Quinces%20en%20la%20web..." target="_blank" class="filter-item agustina" style="text-decoration: none;">
+            <div class="categoria-card">
+                <img src="Imagenes/Quinces/Agustina/portada.jpg" alt="Quinces Agustina" class="card-img">
+                <div class="card-content">
+                    <h3>Quinces</h3>
+                    <p>MIRADA DE AGUSTINA</p>
+                </div>
             </div>
-        </div>
+        </a>
 
+        <a href="https://wa.me/5491122863092?text=Hola%20Ara!%20Vi%20tus%20fotos%20de%20Quinces%20en%20la%20web..." target="_blank" class="filter-item araceli" style="text-decoration: none;">
+            <div class="categoria-card">
+                <img src="Imagenes/Quinces/Araceli/portada.jpg" alt="Quinces Araceli" class="card-img">
+                <div class="card-content">
+                    <h3>Quinces</h3>
+                    <p>MIRADA DE ARACELI</p>
+                </div>
+            </div>
+        </a>
+
+    </div>
+
+    <div class="contacto-container">
+        <h2 style="text-transform: uppercase; letter-spacing: 4px; font-weight: 600; margin-bottom: 10px;">¿Hablamos?</h2>
+        <p style="opacity: 0.6; font-weight: 300; margin-bottom: 40px; font-size: 1.1em;">Consultanos disponibilidad de fecha o presupuestos personalizados.</p>
+        
+        <div style="display: flex; justify-content: center; gap: 25px; flex-wrap: wrap;">
+            <a href="https://wa.me/5491137645315?text=Hola%20Agus!%20Vi%20tu%20web%20y%20quería%20consultarte..." 
+               target="_blank" 
+               style="text-decoration: none; background: #ffffff; color: #000; padding: 18px 35px; border-radius: 50px; font-weight: 600; font-size: 0.9em; transition: 0.3s; display: inline-block;">
+                WHATSAPP AGUSTINA
+            </a>
+            
+            <a href="https://wa.me/5491122863092?text=Hola%20Ara!%20Vi%20tu%20web%20y%20quería%20consultarte..." 
+               target="_blank" 
+               style="text-decoration: none; background: rgba(255,255,255,0.1); color: #fff; border: 1px solid rgba(255,255,255,0.3); padding: 18px 35px; border-radius: 50px; font-weight: 600; font-size: 0.9em; transition: 0.3s; display: inline-block;">
+                WHATSAPP ARACELI
+            </a>
         </div>
+        <p style="margin-top: 40px; font-size: 0.8em; opacity: 0.4; letter-spacing: 2px;">BUENOS AIRES, ARGENTINA</p>
+    </div>
+
+    <script>
+        function filterSelection(c) {
+            var x, i;
+            // Buscamos los enlaces que contienen las tarjetas
+            x = document.getElementsByClassName("filter-item");
+            if (c == "all") c = "";
+            for (i = 0; i < x.length; i++) {
+                x[i].classList.add("hide");
+                if (x[i].className.indexOf(c) > -1) x[i].classList.remove("hide");
+            }
+        }
+
+        // Manejo de botones activos
+        var btnContainer = document.querySelector(".filtros");
+        var btns = btnContainer.getElementsByClassName("filter-btn");
+        for (var i = 0; i < btns.length; i++) {
+            btns[i].addEventListener("click", function(){
+                var current = document.getElementsByClassName("active");
+                current[0].className = current[0].className.replace(" active", "");
+                this.className += " active";
+            });
+        }
+    </script>
 
 </body>
 </html>
