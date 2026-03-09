@@ -70,35 +70,6 @@
 
         .foto-burbuja:hover img { filter: grayscale(0%); }
 
-        .tooltip-descripcion {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%) scale(0.8);
-            width: 220px;
-            background: rgba(0, 0, 0, 0.9);
-            backdrop-filter: blur(10px);
-            padding: 20px;
-            border-radius: 20px;
-            border: 1px solid rgba(255,255,255,0.2);
-            color: white;
-            text-align: center;
-            opacity: 0;
-            visibility: hidden;
-            transition: 0.4s;
-            pointer-events: none;
-            z-index: 20;
-        }
-
-        .foto-burbuja:hover .tooltip-descripcion {
-            opacity: 1;
-            visibility: visible;
-            transform: translate(-50%, -50%) scale(1);
-        }
-
-        .tooltip-descripcion strong { display: block; margin-bottom: 8px; letter-spacing: 2px; color: #3498db; }
-        .tooltip-descripcion p { font-size: 0.8em; margin: 0; line-height: 1.4; font-weight: 300; }
-
         .texto-conjunto {
             flex: 1;
             text-align: center;
@@ -107,9 +78,13 @@
             border-radius: 30px;
             transition: opacity 0.3s ease;
             border: 1px solid rgba(255, 255, 255, 0.05);
+            min-height: 150px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
         }
 
-        .texto-conjunto h3 { text-transform: uppercase; letter-spacing: 4px; margin-bottom: 15px; font-size: 1.2em; color: #fff; }
+        .texto-conjunto h3 { text-transform: uppercase; letter-spacing: 4px; margin-bottom: 15px; font-size: 1.2em; color: #fff; margin-top: 0; }
         .texto-conjunto p { font-size: 0.9em; opacity: 0.7; font-weight: 300; line-height: 1.6; margin: 0; }
 
         /* --- GRILLA DE CATEGORÍAS --- */
@@ -194,47 +169,12 @@
         @media (max-width: 768px) {
             header h1 { font-size: 2.2em; }
             .sobre-nosotras-interactiva { flex-direction: column; gap: 20px; }
-            .texto-conjunto { order: 3; }
-            .foto-burbuja { width: 150px; height: 150px; }
+            .texto-conjunto { order: 3; width: 100%; box-sizing: border-box; }
+            .foto-burbuja { width: 140px; height: 140px; }
             .grid-container { padding: 0 20px 50px; }
         }
     </style>
 </head>
-    <script>
-    const info = {
-        'agus': {
-            titulo: 'AGUSTINA VALDERRAMA',
-            desc: 'Amante de capturar la esencia natural. Mi enfoque está en los detalles que cuentan historias y en buscar la luz perfecta para cada momento.'
-        },
-        'ara': {
-            titulo: 'ARACELI VILLALBA',
-            desc: 'Especialista en momentos espontáneos. Busco que cada imagen transmita la emoción real de ese instante, capturando lo que el ojo a veces no ve.'
-        },
-        'reset': {
-            titulo: 'Sobre Nosotras',
-            desc: 'Dos miradas, una misma pasión. Nos unimos para capturar la autenticidad de cada momento, fusionando técnica y sensibilidad en cada disparo.'
-        }
-    };
-
-    function mostrarPerfil(persona) {
-        const titulo = document.getElementById('titulo-perfil');
-        const desc = document.getElementById('desc-perfil');
-        const panel = document.getElementById('panel-info');
-
-        // Animación de salida suave
-        panel.style.opacity = '0';
-        
-        setTimeout(() => {
-            titulo.innerText = info[persona].titulo;
-            desc.innerText = info[persona].desc;
-            panel.style.opacity = '1';
-        }, 150);
-    }
-
-    function resetPerfil() {
-        mostrarPerfil('reset');
-    }
-</script>
 <body>
 
     <div class="fondo-3d">
@@ -242,7 +182,29 @@
         <div class="circulo c2"></div>
     </div>
 
+    <header>
+        <h1>Nuestra Mirada</h1>
+        <span class="subtitulo-header">Agustina Valderrama & Araceli Villalba</span>
 
+        <div class="sobre-nosotras-interactiva">
+            <div class="perfil-wrapper">
+                <div class="foto-burbuja" onmouseover="mostrarPerfil('agus')" onmouseout="resetPerfil()">
+                    <img src="Imagenes/perfil-agus.jpg" alt="Agustina">
+                </div>
+            </div>
+
+            <div class="texto-conjunto" id="panel-info">
+                <h3 id="titulo-perfil">Sobre Nosotras</h3>
+                <p id="desc-perfil">Dos miradas, una misma pasión. Nos unimos para capturar la autenticidad de cada momento, fusionando técnica y sensibilidad en cada disparo.</p>
+            </div>
+
+            <div class="perfil-wrapper">
+                <div class="foto-burbuja" onmouseover="mostrarPerfil('ara')" onmouseout="resetPerfil()">
+                    <img src="Imagenes/perfil-ara.jpg" alt="Araceli">
+                </div>
+            </div>
+        </div>
+    </header>
 
     <div class="grid-container">
         <a href="galeria-casamientos.html" class="categoria-card">
@@ -262,7 +224,7 @@
         </a>
 
         <a href="galeria-branding.html" class="categoria-card">
-            <img src="Imagenes/Fotoproducto/portada.jpg" alt="Branding" class="card-img">
+            <img src="Imagenes/Branding/portada.jpg" alt="Branding" class="card-img">
             <div class="card-content">
                 <h3>Branding Visual</h3>
                 <p>FOTOPRODUCTO</p>
@@ -320,12 +282,10 @@
 
     <div class="contacto-container">
         <h2 style="text-transform: uppercase; letter-spacing: 4px; font-weight: 600;">Seguinos en Instagram</h2>
-        <p style="opacity: 0.6; margin-bottom: 40px;">Explorá nuestro trabajo diario.</p>
         <div style="display: flex; justify-content: center; gap: 15px; flex-wrap: wrap;">
             <a href="https://www.instagram.com/instantesenclick" target="_blank" class="btn-whatsapp agus-btn">INSTAGRAM AGUSTINA</a>
             <a href="https://www.instagram.com/villalbaraceli.fotografia" target="_blank" class="btn-whatsapp ara-btn">INSTAGRAM ARACELI</a>
         </div>
-        <p style="margin-top: 40px; font-size: 0.7em; opacity: 0.4; letter-spacing: 3px;">BUENOS AIRES, ARGENTINA</p>
     </div>
 
     <div class="wsp-flotante">
@@ -337,6 +297,40 @@
             <svg viewBox="0 0 448 512"><path d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-117zm-157 338.7c-33.2 0-65.7-8.9-94-25.7l-6.7-4-69.8 18.3L72 359.2l-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1 34.8 34.9 56.2 81.2 56.1 130.5 0 101.8-84.9 184.6-186.6 184.6zm101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.6-14.3 18-17.6 21.8-3.2 3.7-6.5 4.2-12 1.4-5.5-2.8-23.2-8.5-44.2-27.1-16.4-14.6-27.4-32.7-30.6-38.2-3.2-5.6-.3-8.6 2.5-11.3 2.5-2.5 5.5-6.5 8.3-9.7 2.8-3.3 3.7-5.5 5.5-9.2 1.9-3.7 1-6.9-.5-9.7-1.4-2.8-12.5-30.1-17.1-41.2-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9-5.1 5.6-19.4 19-19.4 46.3 0 27.3 19.9 53.7 22.6 57.4 2.8 3.7 39.1 59.7 94.8 83.8 13.2 5.8 23.5 9.2 31.5 11.8 13.3 4.2 25.4 3.6 35 2.2 10.7-1.5 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.5-5-3.9-10.5-6.6z"/></svg>
         </div>
     </div>
-    
+
+    <script>
+        const info = {
+            'agus': {
+                titulo: 'AGUSTINA VALDERRAMA',
+                desc: 'Amante de capturar la esencia natural. Mi enfoque está en los detalles que cuentan historias y en buscar la luz perfecta para cada momento.'
+            },
+            'ara': {
+                titulo: 'ARACELI VILLALBA',
+                desc: 'Especialista en momentos espontáneos. Busco que cada imagen transmita la emoción real de ese instante, capturando lo que el ojo a veces no ve.'
+            },
+            'reset': {
+                titulo: 'Sobre Nosotras',
+                desc: 'Dos miradas, una misma pasión. Nos unimos para capturar la autenticidad de cada momento, fusionando técnica y sensibilidad en cada disparo.'
+            }
+        };
+
+        function mostrarPerfil(persona) {
+            const titulo = document.getElementById('titulo-perfil');
+            const desc = document.getElementById('desc-perfil');
+            const panel = document.getElementById('panel-info');
+
+            panel.style.opacity = '0';
+            
+            setTimeout(() => {
+                titulo.innerText = info[persona].titulo;
+                desc.innerText = info[persona].desc;
+                panel.style.opacity = '1';
+            }, 150);
+        }
+
+        function resetPerfil() {
+            mostrarPerfil('reset');
+        }
+    </script>
 </body>
 </html>
