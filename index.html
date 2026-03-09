@@ -105,6 +105,7 @@
             background: rgba(255, 255, 255, 0.03);
             padding: 30px;
             border-radius: 30px;
+            transition: opacity 0.3s ease;
             border: 1px solid rgba(255, 255, 255, 0.05);
         }
 
@@ -199,6 +200,41 @@
         }
     </style>
 </head>
+    <script>
+    const info = {
+        'agus': {
+            titulo: 'AGUSTINA VALDERRAMA',
+            desc: 'Amante de capturar la esencia natural. Mi enfoque está en los detalles que cuentan historias y en buscar la luz perfecta para cada momento.'
+        },
+        'ara': {
+            titulo: 'ARACELI VILLALBA',
+            desc: 'Especialista en momentos espontáneos. Busco que cada imagen transmita la emoción real de ese instante, capturando lo que el ojo a veces no ve.'
+        },
+        'reset': {
+            titulo: 'Sobre Nosotras',
+            desc: 'Dos miradas, una misma pasión. Nos unimos para capturar la autenticidad de cada momento, fusionando técnica y sensibilidad en cada disparo.'
+        }
+    };
+
+    function mostrarPerfil(persona) {
+        const titulo = document.getElementById('titulo-perfil');
+        const desc = document.getElementById('desc-perfil');
+        const panel = document.getElementById('panel-info');
+
+        // Animación de salida suave
+        panel.style.opacity = '0';
+        
+        setTimeout(() => {
+            titulo.innerText = info[persona].titulo;
+            desc.innerText = info[persona].desc;
+            panel.style.opacity = '1';
+        }, 150);
+    }
+
+    function resetPerfil() {
+        mostrarPerfil('reset');
+    }
+</script>
 <body>
 
     <div class="fondo-3d">
@@ -206,37 +242,7 @@
         <div class="circulo c2"></div>
     </div>
 
-    <header>
-        <h1>Nuestra Mirada</h1>
-        <span class="subtitulo-header">Agustina Valderrama & Araceli Villalba</span>
 
-        <div class="sobre-nosotras-interactiva">
-            <div class="perfil-wrapper">
-                <div class="foto-burbuja">
-                    <img src="Imagenes/perfil-agus.jpg" alt="Agustina">
-                    <div class="tooltip-descripcion">
-                        <strong>AGUSTINA</strong>
-                        <p>Amante de capturar la esencia natural. Mi enfoque está en los detalles que cuentan historias.</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="texto-conjunto">
-                <h3>Sobre Nosotras</h3>
-                <p>Dos miradas, una misma pasión. Nos unimos para capturar la autenticidad de cada momento, fusionando técnica y sensibilidad en cada disparo.</p>
-            </div>
-
-            <div class="perfil-wrapper">
-                <div class="foto-burbuja">
-                    <img src="Imagenes/perfil-ara.jpg" alt="Araceli">
-                    <div class="tooltip-descripcion">
-                        <strong>ARACELI</strong>
-                        <p>Especialista en momentos espontáneos. Busco que cada imagen transmita la emoción real de ese instante.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </header>
 
     <div class="grid-container">
         <a href="galeria-casamientos.html" class="categoria-card">
