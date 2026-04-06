@@ -18,7 +18,7 @@
         header h1 { font-size: 3.5em; text-transform: uppercase; letter-spacing: 8px; margin-bottom: 5px; font-weight: 600; }
         header .subtitulo-header { font-weight: 300; opacity: 0.6; letter-spacing: 3px; margin-bottom: 40px; text-transform: uppercase; font-size: 0.9em; display: block; }
 
-        /* --- SOBRE NOSOTRAS INTERACTIVO (AJUSTADO PARA NO MOVERSE) --- */
+        /* --- SOBRE NOSOTRAS INTERACTIVO (LÓGICA CLICK) --- */
         .sobre-nosotras-interactiva { 
             display: flex; 
             align-items: flex-start; 
@@ -29,80 +29,59 @@
             padding: 0 20px; 
         }
 
-        .perfil-wrapper { 
-            flex-shrink: 0; 
-            padding-top: 20px; 
-        }
+        .perfil-wrapper { flex-shrink: 0; padding-top: 20px; }
 
         .foto-burbuja { 
-            width: 180px; 
-            height: 180px; 
-            border-radius: 50%; 
-            border: 2px solid rgba(255,255,255,0.2); 
-            overflow: hidden; 
-            cursor: pointer; 
-            transition: 0.5s; 
-            position: relative; 
-            z-index: 10; 
+            width: 180px; height: 180px; 
+            border-radius: 50%; border: 2px solid rgba(255,255,255,0.2); 
+            overflow: hidden; cursor: pointer; transition: 0.5s; 
+            position: relative; z-index: 10; 
         }
         .foto-burbuja img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(100%); transition: 0.5s; }
-        .foto-burbuja:hover { transform: scale(1.05); border-color: #3498db; box-shadow: 0 0 30px rgba(52, 152, 219, 0.4); }
-        .foto-burbuja:hover img { filter: grayscale(0%); }
+        
+        /* Clase activa cuando se selecciona una fotógrafa */
+        .foto-burbuja.activa { border-color: #3498db; transform: scale(1.1); box-shadow: 0 0 30px rgba(52, 152, 219, 0.4); }
+        .foto-burbuja.activa img { filter: grayscale(0%); }
 
         .texto-conjunto { 
-            flex: 1; 
-            text-align: center; 
+            flex: 1; text-align: center; 
             background: rgba(255, 255, 255, 0.03); 
-            padding: 40px 30px; 
-            border-radius: 30px; 
+            padding: 40px 30px; border-radius: 30px; 
             border: 1px solid rgba(255, 255, 255, 0.05); 
-            
-            /* ALTURA FIJA PARA QUE NADA SE MUEVA ABAJO */
-            min-height: 450px; 
-            display: flex; 
-            flex-direction: column; 
-            justify-content: flex-start; 
+            min-height: 480px; /* Altura fija para que nada se mueva */
+            display: flex; flex-direction: column; 
+            justify-content: flex-start; position: relative;
             backdrop-filter: blur(10px);
         }
 
-        #titulo-perfil { margin: 0 0 15px 0; font-size: 1.8em; letter-spacing: 3px; text-transform: uppercase; color: #3498db; }
-        
-        #desc-perfil { 
-            margin: 0; 
-            font-size: 0.95em; 
-            line-height: 1.8; 
-            opacity: 0.9; 
-            white-space: pre-line; /* Clave para los párrafos de Ara */
-            transition: opacity 0.3s ease;
+        #btn-reset {
+            position: absolute; top: 15px; right: 20px;
+            background: none; border: none; color: white;
+            font-size: 1.2em; cursor: pointer; opacity: 0; transition: 0.3s;
         }
+        #btn-reset.visible { opacity: 0.5; }
+        #btn-reset:hover { opacity: 1; }
+
+        #titulo-perfil { margin: 0 0 15px 0; font-size: 1.8em; letter-spacing: 3px; text-transform: uppercase; color: #3498db; }
+        #desc-perfil { margin: 0; font-size: 0.95em; line-height: 1.8; opacity: 0.9; white-space: pre-line; transition: opacity 0.3s ease; }
 
         /* --- GRILLA DE CATEGORÍAS --- */
         .grid-container { 
-            display: grid; 
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); 
-            gap: 30px; 
-            padding: 0 50px 80px; 
-            max-width: 1400px; 
-            margin: 0 auto; 
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); 
+            gap: 30px; padding: 0 50px 80px; max-width: 1400px; margin: 0 auto; 
         }
         .categoria-card { 
-            position: relative; 
-            height: 400px; 
-            border-radius: 30px; 
-            overflow: hidden; 
-            background: rgba(255, 255, 255, 0.05); 
-            backdrop-filter: blur(15px); 
-            border: 1px solid rgba(255, 255, 255, 0.1); 
-            text-decoration: none; 
-            display: block; 
+            position: relative; height: 400px; border-radius: 30px; 
+            overflow: hidden; background: rgba(255, 255, 255, 0.05); 
+            backdrop-filter: blur(15px); border: 1px solid rgba(255, 255, 255, 0.1); 
+            text-decoration: none; display: block; 
             transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1); 
         }
-        .categoria-card:hover { transform: translateY(-10px); border: 1px solid rgba(255, 255, 255, 0.4); box-shadow: 0 20px 40px rgba(0,0,0,0.6); }
+        .categoria-card:hover { transform: translateY(-10px); border: 1px solid rgba(255, 255, 255, 0.4); }
         .card-img { width: 100%; height: 100%; object-fit: cover; position: absolute; top: 0; left: 0; z-index: -1; opacity: 0.4; transition: 0.6s; }
-        .categoria-card:hover .card-img { opacity: 0.7; transform: scale(1.1); }
         .card-content { position: absolute; bottom: 0; left: 0; width: 100%; padding: 30px; background: linear-gradient(to top, rgba(0,0,0,0.9), transparent); box-sizing: border-box; }
         .card-content h3 { margin: 0; font-size: 1.5em; color: white; text-transform: uppercase; letter-spacing: 2px; }
-        .card-content p { margin: 5px 0 0; font-size: 0.75em; opacity: 0.8; letter-spacing: 2px; color: #3498db; font-weight: 600; }
+        .card-content p { margin: 5px 0 0; font-size: 0.75em; color: #3498db; font-weight: 600; }
 
         /* --- CONTACTO --- */
         .contacto-container { max-width: 900px; margin: 40px auto 100px; padding: 60px 30px; background: rgba(255, 255, 255, 0.02); border-radius: 50px; border: 1px solid rgba(255, 255, 255, 0.1); text-align: center; }
@@ -110,19 +89,11 @@
         .agus-btn { background: #ffffff; color: #000000; }
         .ara-btn { background: rgba(255,255,255,0.05); color: #ffffff; border: 1px solid rgba(255,255,255,0.2); }
 
-        /* --- WHATSAPP FLOTANTE --- */
-        .wsp-flotante { position: fixed; bottom: 30px; right: 30px; z-index: 100; display: flex; flex-direction: column; align-items: flex-end; gap: 10px; }
-        .btn-burbuja { background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(15px); border: 1px solid rgba(255, 255, 255, 0.2); width: 60px; height: 60px; border-radius: 50%; display: flex; justify-content: center; align-items: center; cursor: pointer; }
-        .opciones-wsp { display: none; flex-direction: column; gap: 10px; margin-bottom: 10px; }
-        .wsp-flotante:hover .opciones-wsp { display: flex; }
-        .link-wsp { background: white; color: black; padding: 10px 20px; border-radius: 30px; text-decoration: none; font-size: 0.8em; font-weight: 600; }
-
         @media (max-width: 900px) {
             .sobre-nosotras-interactiva { flex-direction: column; align-items: center; }
-            .perfil-wrapper { padding-top: 0; order: 2; }
-            .texto-conjunto { order: 1; width: 100%; min-height: auto; margin-bottom: 20px; }
+            .texto-conjunto { min-height: auto; width: 100%; order: 1; }
+            .perfil-wrapper { order: 2; }
             header h1 { font-size: 2.2em; }
-            .grid-container { padding: 0 20px 50px; }
         }
     </style>
 </head>
@@ -139,18 +110,19 @@
 
         <div class="sobre-nosotras-interactiva">
             <div class="perfil-wrapper">
-                <div class="foto-burbuja" onmouseover="mostrarPerfil('agus')" onmouseout="resetPerfil()">
+                <div class="foto-burbuja" id="burbuja-agus" onclick="seleccionarPerfil('agus')">
                     <img src="https://res.cloudinary.com/nuestramirada/image/upload/v1/perfil-agus.jpg" alt="Agustina">
                 </div>
             </div>
 
             <div class="texto-conjunto" id="panel-info">
+                <button id="btn-reset" onclick="resetPerfil()">✕</button>
                 <h3 id="titulo-perfil">Sobre Nosotras</h3>
-                <p id="desc-perfil">Dos miradas, una misma pasión. Nos unimos para capturar la autenticidad de cada momento, fusionando técnica y sensibilidad en cada disparo.</p>
+                <p id="desc-perfil">Dos miradas, una misma pasión. Nos unimos para capturar la autenticidad de cada momento, fusionando técnica y sensibilidad en cada disparo. Seleccioná nuestro perfil para conocernos mejor.</p>
             </div>
 
             <div class="perfil-wrapper">
-                <div class="foto-burbuja" onmouseover="mostrarPerfil('ara')" onmouseout="resetPerfil()">
+                <div class="foto-burbuja" id="burbuja-ara" onclick="seleccionarPerfil('ara')">
                     <img src="https://res.cloudinary.com/nuestramirada/image/upload/v1/perfil-ara.jpg" alt="Araceli">
                 </div>
             </div>
@@ -167,18 +139,7 @@
         </div>
     </div>
 
-    <div class="wsp-flotante">
-        <div class="opciones-wsp">
-            <a href="https://wa.me/5491137645315" target="_blank" class="link-wsp">Chat con Agus</a>
-            <a href="https://wa.me/5491122863092" target="_blank" class="link-wsp">Chat con Ara</a>
-        </div>
-        <div class="btn-burbuja">
-            <svg viewBox="0 0 448 512" style="width:30px; fill:white;"><path d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-117zm-157 338.7c-33.2 0-65.7-8.9-94-25.7l-6.7-4-69.8 18.3L72 359.2l-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1 34.8 34.9 56.2 81.2 56.1 130.5 0 101.8-84.9 184.6-186.6 184.6zm101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.6-14.3 18-17.6 21.8-3.2 3.7-6.5 4.2-12 1.4-5.5-2.8-23.2-8.5-44.2-27.1-16.4-14.6-27.4-32.7-30.6-38.2-3.2-5.6-.3-8.6 2.5-11.3 2.5-2.5 5.5-6.5 8.3-9.7 2.8-3.3 3.7-5.5 5.5-9.2 1.9-3.7 1-6.9-.5-9.7-1.4-2.8-12.5-30.1-17.1-41.2-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9-5.1 5.6-19.4 19-19.4 46.3 0 27.3 19.9 53.7 22.6 57.4 2.8 3.7 39.1 59.7 94.8 83.8 13.2 5.8 23.5 9.2 31.5 11.8 13.3 4.2 25.4 3.6 35 2.2 10.7-1.5 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.5-5-3.9-10.5-6.6z"/></svg>
-        </div>
-    </div>
-
     <script>
-        /* --- LÓGICA DE PERFILES --- */
         const infoPerfiles = {
             'agus': { 
                 titulo: 'AGUSTINA VALDERRAMA', 
@@ -186,7 +147,7 @@
             },
             'ara': { 
                 titulo: 'ARACELI VILLALBA', 
-                desc: `De un juego de infancia a tu mejor recuerdo.
+                desc: `Mi mirada: De un juego de infancia a tu mejor recuerdo.
 
 Todo empezó con la cámara de rollo de mi papá. A través de ese lente, el mundo se volvía más grande, nítido y mágico. Lo observaba a él buscar "la toma perfecta" en cada acto familiar y, sin saberlo, ahí nació mi pasión: la necesidad de guardar el tiempo.
 
@@ -196,24 +157,41 @@ Hoy, con 10 años de experiencia, entiendo que mi trabajo es invisible pero eter
             },
             'reset': { 
                 titulo: 'Sobre Nosotras', 
-                desc: 'Dos miradas, una misma pasión. Nos unimos para capturar la autenticidad de cada momento, fusionando técnica y sensibilidad en cada disparo.' 
+                desc: 'Dos miradas, una misma pasión. Nos unimos para capturar la autenticidad de cada momento, fusionando técnica y sensibilidad en cada disparo. Seleccioná nuestro perfil para conocernos mejor.' 
             }
         };
 
-        function mostrarPerfil(persona) {
+        function seleccionarPerfil(persona) {
+            // Actualizar Texto
             const titulo = document.getElementById('titulo-perfil');
             const desc = document.getElementById('desc-perfil');
             const panel = document.getElementById('panel-info');
-            
+            const btnReset = document.getElementById('btn-reset');
+
             panel.style.opacity = '0';
+            
             setTimeout(() => {
                 titulo.innerText = infoPerfiles[persona].titulo;
                 desc.innerText = infoPerfiles[persona].desc;
                 panel.style.opacity = '1';
+                btnReset.classList.add('visible');
             }, 150);
+
+            // Actualizar Estética de las burbujas
+            document.querySelectorAll('.foto-burbuja').forEach(b => b.classList.remove('activa'));
+            document.getElementById(`burbuja-${persona}`).classList.add('activa');
         }
 
-        function resetPerfil() { mostrarPerfil('reset'); }
+        function resetPerfil() {
+            const titulo = document.getElementById('titulo-perfil');
+            const desc = document.getElementById('desc-perfil');
+            const btnReset = document.getElementById('btn-reset');
+
+            titulo.innerText = infoPerfiles['reset'].titulo;
+            desc.innerText = infoPerfiles['reset'].desc;
+            btnReset.classList.remove('visible');
+            document.querySelectorAll('.foto-burbuja').forEach(b => b.classList.remove('activa'));
+        }
 
         /* --- GRILLA DINÁMICA --- */
         const cloudName = "nuestramirada";
@@ -230,24 +208,16 @@ Hoy, con 10 años de experiencia, entiendo que mi trabajo es invisible pero eter
         ];
 
         const grid = document.getElementById('grid-categorias');
-
         categorias.forEach(cat => {
             const num = Math.floor(Math.random() * 20) + 1;
             const autor = (num % 2 !== 0) ? "Agus" : "Ara";
             const nombreFoto = `${cat.id}_${autor}_${num}.jpg`;
-
             const card = document.createElement('a');
             card.href = cat.url;
             card.className = 'categoria-card';
             card.innerHTML = `
-                <img src="https://res.cloudinary.com/${cloudName}/image/upload/f_auto,q_auto/${nombreFoto}" 
-                     class="card-img" 
-                     alt="${cat.id}"
-                     onerror="this.src='https://res.cloudinary.com/${cloudName}/image/upload/f_auto,q_auto/${cat.id}_Agus_1.jpg'">
-                <div class="card-content">
-                    <h3>${cat.id.replace('_', ' ')}</h3>
-                    <p>${cat.sub}</p>
-                </div>
+                <img src="https://res.cloudinary.com/${cloudName}/image/upload/f_auto,q_auto/${nombreFoto}" class="card-img" alt="${cat.id}" onerror="this.src='https://res.cloudinary.com/${cloudName}/image/upload/f_auto,q_auto/${cat.id}_Agus_1.jpg'">
+                <div class="card-content"><h3>${cat.id.replace('_', ' ')}</h3><p>${cat.sub}</p></div>
             `;
             grid.appendChild(card);
         });
