@@ -14,17 +14,67 @@
         .c1 { width: 400px; height: 400px; background: #8e44ad; top: -100px; right: -100px; }
         .c2 { width: 350px; height: 350px; background: #3498db; bottom: -50px; left: -100px; }
 
-        header { text-align: center; padding: 60px 20px 40px; }
+        header { text-align: center; padding: 60px 20px 20px; }
         header h1 { font-size: 3.5em; text-transform: uppercase; letter-spacing: 8px; margin-bottom: 5px; font-weight: 600; }
         header .subtitulo-header { font-weight: 300; opacity: 0.6; letter-spacing: 3px; margin-bottom: 40px; text-transform: uppercase; font-size: 0.9em; display: block; }
 
-        /* --- SOBRE NOSOTRAS --- */
-        .sobre-nosotras-interactiva { display: flex; align-items: center; justify-content: center; gap: 40px; max-width: 1100px; margin: 0 auto 80px; padding: 0 20px; }
-        .foto-burbuja { width: 180px; height: 180px; border-radius: 50%; border: 2px solid rgba(255,255,255,0.2); overflow: hidden; cursor: pointer; transition: 0.5s; position: relative; z-index: 10; }
+        /* --- SOBRE NOSOTRAS INTERACTIVO (AJUSTADO PARA NO MOVERSE) --- */
+        .sobre-nosotras-interactiva { 
+            display: flex; 
+            align-items: flex-start; 
+            justify-content: center; 
+            gap: 40px; 
+            max-width: 1200px; 
+            margin: 0 auto 60px; 
+            padding: 0 20px; 
+        }
+
+        .perfil-wrapper { 
+            flex-shrink: 0; 
+            padding-top: 20px; 
+        }
+
+        .foto-burbuja { 
+            width: 180px; 
+            height: 180px; 
+            border-radius: 50%; 
+            border: 2px solid rgba(255,255,255,0.2); 
+            overflow: hidden; 
+            cursor: pointer; 
+            transition: 0.5s; 
+            position: relative; 
+            z-index: 10; 
+        }
         .foto-burbuja img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(100%); transition: 0.5s; }
-        .foto-burbuja:hover { transform: scale(1.1); border-color: #3498db; box-shadow: 0 0 30px rgba(52, 152, 219, 0.4); }
+        .foto-burbuja:hover { transform: scale(1.05); border-color: #3498db; box-shadow: 0 0 30px rgba(52, 152, 219, 0.4); }
         .foto-burbuja:hover img { filter: grayscale(0%); }
-        .texto-conjunto { flex: 1; text-align: center; background: rgba(255, 255, 255, 0.03); padding: 30px; border-radius: 30px; border: 1px solid rgba(255, 255, 255, 0.05); min-height: 150px; display: flex; flex-direction: column; justify-content: center; }
+
+        .texto-conjunto { 
+            flex: 1; 
+            text-align: center; 
+            background: rgba(255, 255, 255, 0.03); 
+            padding: 40px 30px; 
+            border-radius: 30px; 
+            border: 1px solid rgba(255, 255, 255, 0.05); 
+            
+            /* ALTURA FIJA PARA QUE NADA SE MUEVA ABAJO */
+            min-height: 450px; 
+            display: flex; 
+            flex-direction: column; 
+            justify-content: flex-start; 
+            backdrop-filter: blur(10px);
+        }
+
+        #titulo-perfil { margin: 0 0 15px 0; font-size: 1.8em; letter-spacing: 3px; text-transform: uppercase; color: #3498db; }
+        
+        #desc-perfil { 
+            margin: 0; 
+            font-size: 0.95em; 
+            line-height: 1.8; 
+            opacity: 0.9; 
+            white-space: pre-line; /* Clave para los párrafos de Ara */
+            transition: opacity 0.3s ease;
+        }
 
         /* --- GRILLA DE CATEGORÍAS --- */
         .grid-container { 
@@ -67,9 +117,11 @@
         .wsp-flotante:hover .opciones-wsp { display: flex; }
         .link-wsp { background: white; color: black; padding: 10px 20px; border-radius: 30px; text-decoration: none; font-size: 0.8em; font-weight: 600; }
 
-        @media (max-width: 768px) {
+        @media (max-width: 900px) {
+            .sobre-nosotras-interactiva { flex-direction: column; align-items: center; }
+            .perfil-wrapper { padding-top: 0; order: 2; }
+            .texto-conjunto { order: 1; width: 100%; min-height: auto; margin-bottom: 20px; }
             header h1 { font-size: 2.2em; }
-            .sobre-nosotras-interactiva { flex-direction: column; }
             .grid-container { padding: 0 20px 50px; }
         }
     </style>
@@ -110,8 +162,8 @@
     <div class="contacto-container">
         <h2 style="text-transform: uppercase; letter-spacing: 4px; font-weight: 600;">Seguinos en Instagram</h2>
         <div style="display: flex; justify-content: center; gap: 15px; flex-wrap: wrap;">
-            <a href="https://www.instagram.com/instantesenclick" target="_blank" class="btn-whatsapp agus-btn">INSTAGRAM AGUSTINA</a>
-            <a href="https://www.instagram.com/villalbaraceli.fotografia" target="_blank" class="btn-whatsapp ara-btn">INSTAGRAM ARACELI</a>
+            <a href="https://www.instagram.com/instantesenclick" target="_blank" class="btn-whatsapp agus-btn">@INSTANTESENCLICK</a>
+            <a href="https://www.instagram.com/villalbaraceli.fotografia" target="_blank" class="btn-whatsapp ara-btn">@VILLALBARACELI</a>
         </div>
     </div>
 
@@ -126,7 +178,7 @@
     </div>
 
     <script>
-/* --- LÓGICA DE PERFILES --- */
+        /* --- LÓGICA DE PERFILES --- */
         const infoPerfiles = {
             'agus': { 
                 titulo: 'AGUSTINA VALDERRAMA', 
@@ -144,7 +196,7 @@ Hoy, con 10 años de experiencia, entiendo que mi trabajo es invisible pero eter
             },
             'reset': { 
                 titulo: 'Sobre Nosotras', 
-                desc: 'Dos miradas, una misma pasión. Nos unimos para capturar la autenticidad de cada momento.' 
+                desc: 'Dos miradas, una misma pasión. Nos unimos para capturar la autenticidad de cada momento, fusionando técnica y sensibilidad en cada disparo.' 
             }
         };
 
@@ -152,6 +204,7 @@ Hoy, con 10 años de experiencia, entiendo que mi trabajo es invisible pero eter
             const titulo = document.getElementById('titulo-perfil');
             const desc = document.getElementById('desc-perfil');
             const panel = document.getElementById('panel-info');
+            
             panel.style.opacity = '0';
             setTimeout(() => {
                 titulo.innerText = infoPerfiles[persona].titulo;
@@ -159,9 +212,10 @@ Hoy, con 10 años de experiencia, entiendo que mi trabajo es invisible pero eter
                 panel.style.opacity = '1';
             }, 150);
         }
+
         function resetPerfil() { mostrarPerfil('reset'); }
 
-        /* --- LÓGICA DE GRILLA DINÁMICA CON AZAR --- */
+        /* --- GRILLA DINÁMICA --- */
         const cloudName = "nuestramirada";
         const categorias = [
             { id: 'Casamientos', sub: 'HISTORIAS DE AMOR', url: 'galeria-casamientos.html' },
@@ -178,7 +232,6 @@ Hoy, con 10 años de experiencia, entiendo que mi trabajo es invisible pero eter
         const grid = document.getElementById('grid-categorias');
 
         categorias.forEach(cat => {
-            // Elegimos un número al azar (1 al 20) para la portada
             const num = Math.floor(Math.random() * 20) + 1;
             const autor = (num % 2 !== 0) ? "Agus" : "Ara";
             const nombreFoto = `${cat.id}_${autor}_${num}.jpg`;
