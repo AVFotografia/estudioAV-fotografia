@@ -43,17 +43,24 @@
         .foto-burbuja.activa { border-color: #3498db; transform: scale(1.1); box-shadow: 0 0 30px rgba(52, 152, 219, 0.4); }
         .foto-burbuja.activa img { filter: grayscale(0%); }
 
-        .texto-conjunto { 
-            flex: 1; text-align: center; 
-            background: rgba(255, 255, 255, 0.03); 
-            padding: 40px 30px; border-radius: 30px; 
-            border: 1px solid rgba(255, 255, 255, 0.05); 
-            min-height: 480px; /* Altura fija para que nada se mueva */
-            display: flex; flex-direction: column; 
-            justify-content: flex-start; position: relative;
-            backdrop-filter: blur(10px);
-        }
-
+.texto-conjunto { 
+    flex: 1; 
+    text-align: center; 
+    background: rgba(255, 255, 255, 0.03); 
+    padding: 40px 30px; 
+    border-radius: 30px; 
+    border: 1px solid rgba(255, 255, 255, 0.05); 
+    
+    /* CAMBIOS AQUÍ: Quitamos min-height y dejamos que fluya */
+    display: flex; 
+    flex-direction: column; 
+    justify-content: flex-start; 
+    position: relative;
+    backdrop-filter: blur(10px);
+    
+    /* Esto hace que el cambio de tamaño sea suave */
+    transition: all 0.4s ease-in-out; 
+}
         #btn-reset {
             position: absolute; top: 15px; right: 20px;
             background: none; border: none; color: white;
@@ -169,27 +176,28 @@ Hacé clic en nuestras fotos para conocernos un poco más.`
             }
         };
 
-        function seleccionarPerfil(persona) {
-            // Actualizar Texto
-            const titulo = document.getElementById('titulo-perfil');
-            const desc = document.getElementById('desc-perfil');
-            const panel = document.getElementById('panel-info');
-            const btnReset = document.getElementById('btn-reset');
+function seleccionarPerfil(persona) {
+    const titulo = document.getElementById('titulo-perfil');
+    const desc = document.getElementById('desc-perfil');
+    const panel = document.getElementById('panel-info');
+    const btnReset = document.getElementById('btn-reset');
 
-            panel.style.opacity = '0';
-            
-            setTimeout(() => {
-                titulo.innerText = infoPerfiles[persona].titulo;
-                desc.innerText = infoPerfiles[persona].desc;
-                panel.style.opacity = '1';
-                btnReset.classList.add('visible');
-            }, 150);
+    // Primero ocultamos el contenido
+    panel.style.opacity = '0';
+    
+    setTimeout(() => {
+        // Cambiamos el texto (aquí el box se va a auto-ajustar solo)
+        titulo.innerText = infoPerfiles[persona].titulo;
+        desc.innerText = infoPerfiles[persona].desc;
+        
+        // Volvemos a mostrar con el nuevo tamaño
+        panel.style.opacity = '1';
+        if(persona !== 'reset') btnReset.classList.add('visible');
+    }, 200); // Un pelín más de tiempo para que la transición sea fluida
 
-            // Actualizar Estética de las burbujas
-            document.querySelectorAll('.foto-burbuja').forEach(b => b.classList.remove('activa'));
-            document.getElementById(`burbuja-${persona}`).classList.add('activa');
-        }
-
+    document.querySelectorAll('.foto-burbuja').forEach(b => b.classList.remove('activa'));
+    if(persona !== 'reset') document.getElementById(`burbuja-${persona}`).classList.add('activa');
+}
         function resetPerfil() {
             const titulo = document.getElementById('titulo-perfil');
             const desc = document.getElementById('desc-perfil');
