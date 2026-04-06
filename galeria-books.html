@@ -8,48 +8,57 @@
     <style>
         body { margin: 0; background: #0a0a0a; color: white; font-family: 'Poppins', sans-serif; }
         
-        header { padding: 60px 20px; text-align: center; }
-        header h1 { text-transform: uppercase; letter-spacing: 8px; font-weight: 600; margin: 0; }
+        /* FONDO DINÁMICO 3D PARA COHERENCIA */
+        .fondo-3d { position: fixed; width: 100vw; height: 100vh; top: 0; left: 0; z-index: -1; filter: blur(80px); opacity: 0.2; }
+        .circulo { position: absolute; border-radius: 50%; }
+        .c1 { width: 400px; height: 400px; background: #8e44ad; top: -100px; right: -100px; }
+        .c2 { width: 350px; height: 350px; background: #3498db; bottom: -50px; left: -100px; }
+
+        header { padding: 60px 20px 40px; text-align: center; }
+        header h1 { text-transform: uppercase; letter-spacing: 8px; font-weight: 600; margin: 0; font-size: 2.5em; }
         
         .btn-volver { 
-            display: inline-block; margin-top: 20px; color: #3498db; text-decoration: none; 
-            font-size: 0.8em; letter-spacing: 2px; border: 1px solid #3498db; 
-            padding: 10px 20px; border-radius: 30px; transition: 0.3s; 
+            display: inline-block; margin-top: 20px; color: rgba(255,255,255,0.6); text-decoration: none; 
+            font-size: 0.8em; letter-spacing: 2px; border: 1px solid rgba(255,255,255,0.2); 
+            padding: 10px 25px; border-radius: 30px; transition: 0.3s; backdrop-filter: blur(10px);
         }
-        .btn-volver:hover { background: #3498db; color: white; }
+        .btn-volver:hover { background: white; color: black; }
 
-        .galeria-grid { 
-            display: grid; 
-            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); 
-            gap: 20px; 
+        /* DISEÑO MASONRY PINTEREST */
+        .galeria-masonry { 
+            column-count: 3;
+            column-gap: 25px;
             padding: 0 40px 100px; 
-            max-width: 1600px; 
+            max-width: 1500px; 
             margin: 0 auto; 
         }
 
         .foto-item { 
+            display: inline-block;
+            width: 100%;
+            margin-bottom: 25px;
+            break-inside: avoid;
             position: relative;
-            width: 100%; 
-            height: 500px; /* Un poco más alto para lucir mejor los retratos de los books */
             border-radius: 20px; 
             overflow: hidden; 
             background: #111; 
             opacity: 0;
             transform: translateY(20px);
             transition: opacity 0.6s ease, transform 0.6s ease;
+            border: 1px solid rgba(255, 255, 255, 0.05);
         }
 
         .foto-item.visible { opacity: 1; transform: translateY(0); }
 
         .foto-item img { 
             width: 100%; 
-            height: 100%; 
-            object-fit: cover; 
+            height: auto; 
+            display: block;
             transition: 0.8s cubic-bezier(0.2, 1, 0.3, 1);
             cursor: pointer; 
         }
 
-        .foto-item:hover img { transform: scale(1.08); filter: brightness(0.8); }
+        .foto-item:hover img { transform: scale(1.05); filter: brightness(0.8); }
 
         .foto-info {
             position: absolute;
@@ -65,29 +74,37 @@
         }
 
         .foto-item:hover .foto-info { opacity: 1; }
-        .firma { font-size: 0.75em; letter-spacing: 2px; font-weight: 300; text-transform: uppercase; color: #fff; }
+        .firma { font-size: 0.7em; letter-spacing: 2px; font-weight: 600; text-transform: uppercase; color: #3498db; }
 
+        /* RESPONSIVE */
+        @media (max-width: 1024px) { .galeria-masonry { column-count: 2; } }
         @media (max-width: 768px) { 
-            .galeria-grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); padding: 0 15px; gap: 10px; } 
-            .foto-item { height: 280px; border-radius: 12px; } 
+            .galeria-masonry { column-count: 2; column-gap: 15px; padding: 0 15px 100px; } 
+            .foto-item { margin-bottom: 15px; border-radius: 12px; }
+            header h1 { font-size: 1.8em; }
         }
     </style>
 </head>
 <body>
+
+    <div class="fondo-3d">
+        <div class="circulo c1"></div>
+        <div class="circulo c2"></div>
+    </div>
 
     <header>
         <h1>BOOKS</h1>
         <a href="index.html" class="btn-volver">← VOLVER AL PORTFOLIO</a>
     </header>
 
-    <div class="galeria-grid" id="galeria-books">
+    <div class="galeria-masonry" id="galeria-books">
         </div>
 
     <script>
         const grid = document.getElementById('galeria-books');
         const cloudName = "nuestramirada";
         const categoria = "Books"; 
-        const totalFotos = 30; // Cantidad de fotos que tenés o pensás tener
+        const totalFotos = 50; // Margen para que cargue lo que vayas subiendo
 
         for (let i = 1; i <= totalFotos; i++) {
             const autorShort = (i % 2 !== 0) ? "Agus" : "Ara";
@@ -110,7 +127,6 @@
                 div.appendChild(info);
             };
 
-            // Si la foto no existe en Cloudinary, no muestra el espacio vacío
             img.onerror = () => div.remove();
 
             div.appendChild(img);
