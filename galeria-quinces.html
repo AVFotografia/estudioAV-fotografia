@@ -97,4 +97,34 @@
         const contenedor = document.getElementById('contenedor-fotos');
 
         for (let i = 1; i <= totalFotos; i++) {
-            // Lógica de autor (Impar=
+            // Lógica de autor (Impar=Agus, Par=Ara) para buscar el archivo
+            const autorShort = (i % 2 !== 0) ? "Agus" : "Ara";
+            const firmaNombre = (i % 2 !== 0) ? "Agustina Valderrama" : "Araceli Villalba";
+            const nombreArchivo = `${categoria}_${autorShort}_${i}.jpg`;
+
+            const card = document.createElement('div');
+            card.className = 'foto-card';
+            
+            const img = document.createElement('img');
+            img.src = `https://res.cloudinary.com/${cloudName}/image/upload/f_auto,q_auto/${nombreArchivo}`;
+            img.loading = "lazy";
+
+            img.onload = function() {
+                card.classList.add('visible');
+            };
+
+            img.onerror = function() {
+                card.remove(); 
+            };
+
+            card.innerHTML = `
+                <img src="${img.src}">
+                <div class="foto-info">
+                    <span class="firma">By ${firmaNombre}</span>
+                </div>
+            `;
+            contenedor.appendChild(card);
+        }
+    </script>
+</body>
+</html>
