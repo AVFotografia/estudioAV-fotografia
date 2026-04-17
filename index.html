@@ -16,20 +16,20 @@
 
         header { text-align: center; padding: 60px 20px 20px; }
         header h1 { font-size: 3.5em; text-transform: uppercase; letter-spacing: 8px; margin-bottom: 5px; font-weight: 600; }
-        header .subtitulo-header { font-weight: 300; opacity: 0.6; letter-spacing: 3px; margin-bottom: 40px; text-transform: uppercase; font-size: 0.9em; display: block; }
+        header .subtitulo-header { font-weight: 300; opacity: 0.8; letter-spacing: 1px; margin-bottom: 40px; font-size: 1.1em; display: block; max-width: 800px; margin-left: auto; margin-right: auto; line-height: 1.6; }
 
-        /* --- SOBRE NOSOTRAS INTERACTIVO (LÓGICA CLICK) --- */
+        /* --- SOBRE NOSOTRAS INTERACTIVO --- */
         .sobre-nosotras-interactiva { 
             display: flex; 
-            align-items: flex-start; 
+            align-items: center; 
             justify-content: center; 
             gap: 40px; 
             max-width: 1200px; 
-            margin: 0 auto 60px; 
+            margin: 0 auto 40px; 
             padding: 0 20px; 
         }
 
-        .perfil-wrapper { flex-shrink: 0; padding-top: 20px; }
+        .perfil-wrapper { flex-shrink: 0; }
 
         .foto-burbuja { 
             width: 180px; height: 180px; 
@@ -38,29 +38,22 @@
             position: relative; z-index: 10; 
         }
         .foto-burbuja img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(100%); transition: 0.5s; }
-        
-        /* Clase activa cuando se selecciona una fotógrafa */
         .foto-burbuja.activa { border-color: #3498db; transform: scale(1.1); box-shadow: 0 0 30px rgba(52, 152, 219, 0.4); }
         .foto-burbuja.activa img { filter: grayscale(0%); }
 
-.texto-conjunto { 
-    flex: 1; 
-    text-align: center; 
-    background: rgba(255, 255, 255, 0.03); 
-    padding: 40px 30px; 
-    border-radius: 30px; 
-    border: 1px solid rgba(255, 255, 255, 0.05); 
-    
-    /* CAMBIOS AQUÍ: Quitamos min-height y dejamos que fluya */
-    display: flex; 
-    flex-direction: column; 
-    justify-content: flex-start; 
-    position: relative;
-    backdrop-filter: blur(10px);
-    
-    /* Esto hace que el cambio de tamaño sea suave */
-    transition: all 0.4s ease-in-out; 
-}
+        .texto-conjunto { 
+            width: fit-content;
+            max-width: 600px;
+            text-align: center; 
+            background: rgba(255, 255, 255, 0.03); 
+            padding: 40px 30px; border-radius: 30px; 
+            border: 1px solid rgba(255, 255, 255, 0.05); 
+            display: flex; flex-direction: column; 
+            justify-content: center; position: relative;
+            backdrop-filter: blur(10px);
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
         #btn-reset {
             position: absolute; top: 15px; right: 20px;
             background: none; border: none; color: white;
@@ -71,6 +64,8 @@
 
         #titulo-perfil { margin: 0 0 15px 0; font-size: 1.8em; letter-spacing: 3px; text-transform: uppercase; color: #3498db; }
         #desc-perfil { margin: 0; font-size: 0.95em; line-height: 1.8; opacity: 0.9; white-space: pre-line; transition: opacity 0.3s ease; }
+
+        .guia-bajada { opacity: 0.4; font-size: 0.75em; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 60px; }
 
         /* --- GRILLA DE CATEGORÍAS --- */
         .grid-container { 
@@ -96,11 +91,19 @@
         .agus-btn { background: #ffffff; color: #000000; }
         .ara-btn { background: rgba(255,255,255,0.05); color: #ffffff; border: 1px solid rgba(255,255,255,0.2); }
 
+        /* --- AJUSTES CELULAR --- */
         @media (max-width: 900px) {
-            .sobre-nosotras-interactiva { flex-direction: column; align-items: center; }
-            .texto-conjunto { min-height: auto; width: 100%; order: 1; }
-            .perfil-wrapper { order: 2; }
-            header h1 { font-size: 2.2em; }
+            header h1 { font-size: 2.2em; letter-spacing: 4px; }
+            header .subtitulo-header { font-size: 0.9em; padding: 0 10px; }
+            .sobre-nosotras-interactiva { flex-direction: column; align-items: center; gap: 20px; }
+            
+            /* Contenedor de fotos para que salgan una al lado de la otra en celu */
+            .fotos-mobile-wrapper { display: flex; justify-content: center; gap: 15px; order: 1; }
+            .foto-burbuja { width: 130px; height: 130px; }
+            
+            .texto-conjunto { order: 2; width: 100%; max-width: 100%; padding: 30px 20px; }
+            #titulo-perfil { font-size: 1.4em; }
+            #desc-perfil { font-size: 0.85em; line-height: 1.7; }
         }
     </style>
 </head>
@@ -113,31 +116,39 @@
 
     <header>
         <h1>Nuestra Mirada</h1>
-        <span class="subtitulo-header">Agustina Valderrama & Araceli Villalba</span>
+        <span class="subtitulo-header">
+            Te invitamos a ver nuestro portfolio y elegirnos para honrar tu evento.<br>
+            <small style="opacity: 0.6; font-size: 0.8em; text-transform: none;">(Hacé clic en nuestras fotos para conocernos un poco más)</small>
+        </span>
 
         <div class="sobre-nosotras-interactiva">
-            <div class="perfil-wrapper">
-                <div class="foto-burbuja" id="burbuja-agus" onclick="seleccionarPerfil('agus')">
-                    <img src="https://res.cloudinary.com/nuestramirada/image/upload/v1/perfil-agus.jpg" alt="Agustina">
+            <div class="fotos-mobile-wrapper">
+                <div class="perfil-wrapper">
+                    <div class="foto-burbuja" id="burbuja-agus" onclick="seleccionarPerfil('agus')">
+                        <img src="https://res.cloudinary.com/nuestramirada/image/upload/v1/perfil-agus.jpg" alt="Agustina">
+                    </div>
                 </div>
+
+                <div class="perfil-wrapper pc-only-right" id="wrapper-ara-pc">
+                     </div>
             </div>
 
             <div class="texto-conjunto" id="panel-info">
                 <button id="btn-reset" onclick="resetPerfil()">✕</button>
                 <h3 id="titulo-perfil">Sobre Nosotras</h3>
-                <p id="desc-perfil">Somos amigas hace 9 años y la fotografía siempre fue el tema de nuestras charlas. Entre anécdotas de eventos, consejos y dándonos una mano para mejorar, nos dimos cuenta de que funcionamos mejor como equipo.
+                <p id="desc-perfil">Somos amigas hace 9 años y la fotografía siempre fue el tema de nuestras charlas. Entre anécdotas de eventos y dándonos una mano para mejorar, nos dimos cuenta de que funcionamos mejor como equipo.
 
-Esa confianza de años es lo que hoy nos permite laburar juntas en Nuestra Mirada. Nos entendemos sin hablar y compartimos el mismo objetivo: que cada entrega tenga ese nivel de detalle y calidad que buscamos desde que empezamos.
-
-Hacé clic en nuestras fotos para conocernos un poco más.</p>
+Esa confianza es lo que hoy nos permite laburar juntas en Nuestra Mirada. Nos entendemos sin hablar y compartimos el mismo objetivo: que cada entrega tenga el nivel de detalle y calidad que buscamos desde que empezamos.</p>
             </div>
 
-            <div class="perfil-wrapper">
+            <div class="perfil-wrapper" id="ara-original-place">
                 <div class="foto-burbuja" id="burbuja-ara" onclick="seleccionarPerfil('ara')">
                     <img src="https://res.cloudinary.com/nuestramirada/image/upload/v1/perfil-ara.jpg" alt="Araceli">
                 </div>
             </div>
         </div>
+
+        <p class="guia-bajada">El portfolio de Estudio AV. Baja para visualizar cada categoría</p>
     </header>
 
     <div class="grid-container" id="grid-categorias"></div>
@@ -154,64 +165,59 @@ Hacé clic en nuestras fotos para conocernos un poco más.</p>
         const infoPerfiles = {
             'agus': { 
                 titulo: 'AGUSTINA VALDERRAMA', 
-                desc: 'Mi conexión con la fotografía empezó antes de tener una cámara, empezó en mi casa mirando una caja llena de fotos donde podía pasar horas observando momentos congelados, intentando entender historias, vínculos y todo lo que había detrás de cada imagen, y fue ahí donde entendí que no eran simples papeles sino tesoros que te permiten viajar en el tiempo y volver a lugares, personas y emociones que de otra forma se perderían.
-Con el tiempo tuve la necesidad propia de crear mis propios tesoros, de capturar lo que vivo y lo que pasa a mi alrededor, durante años fue un hobby hasta que hace 6 años hice mi primer evento y pude ser parte de la construcción de esos momentos para otras personas. 
-Hoy trabajo desde la conexión con las personas a estar presente sin invadir y a registrar lo que realmente importa, y a través de mi proyecto (en conjunto con mi pareja Alejandro) Instantes en Click comparto esta mirada y todo lo que construyo en cada evento, busco que cada imagen no solo muestre un momento sino que permita volver a sentirlo, porque al final lo importante no es solo lo que se ve sino lo que queda de esos momentos'
-    },
-'ara': { 
-    titulo: 'ARACELI VILLALBA', 
-    desc: `Mi historia con la fotografía empezó como un juego de observación. 
+                desc: 'Mi conexión con la fotografía empezó antes de tener una cámara, mirando cajas llenas de fotos. Ahí entendí que no eran simples papeles sino tesoros que te permiten viajar en el tiempo.\n\nDurante años fue un hobby hasta que hace 6 años hice mi primer evento y pude ser parte de la construcción de esos momentos para otros. Busco que cada imagen no solo muestre un momento, sino que permita volver a sentirlo.' 
+            },
+            'ara': { 
+                titulo: 'ARACELI VILLALBA', 
+                desc: `Empecé de chica, jugando con la cámara de rollo de mi viejo. Me acuerdo de quedarme mirando por el lente; me flasheaba cómo ese cuadradito hacía que todo se viera más grande y nítido. Lo veía a él buscando la mejor toma en cada acto del colegio y, sin darme cuenta, me quedó ese chip de querer guardar todo.
 
-Recuerdo pasar horas mirando a través del lente de la cámara de rollo de mi papá; para mí, ese visor era la forma de ver el mundo más nítido y detallado. Lo veía a él encuadrar cada acto familiar con precisión y, casi sin darme cuenta, heredé esa obsesión por documentar el paso del tiempo.
+Después seguí con el celular, sacándole fotos a cualquier cosa, hasta que con mi primer laburo me pude comprar mi primera cámara. Ahí me metí de lleno: hice cursos de foto artística, digital y no paré más. Mis amigos fueron mis primeros modelos (me segundearon en todas) y así llegaron los primeros eventos.
 
-Desde mi primer trabajo, mi objetivo fue claro: profesionalizar esa curiosidad. Me formé en fotografía artística y digital, pasando de las primeras pruebas con amigos a cubrir mis propios eventos. 
-
-Hoy, con 10 años de experiencia, entiendo que mi rol es ser una observadora silenciosa. Mi prioridad es que vos disfrutes el momento con total libertad, mientras yo me encargo de que cada uno de esos instantes quede guardado con la técnica y la fuerza que merecen.` 
-},
-'reset': { 
+Hoy, con 10 años de experiencia, lo que más me gusta es eso: estar ahí, capturar el momento clave y que ustedes se olviden de que yo estoy, para que después tengan ese recuerdo guardado para siempre.` 
+            },
+            'reset': { 
                 titulo: 'Sobre Nosotras', 
-                desc: `Somos amigas hace 9 años y la fotografía siempre fue el tema de nuestras charlas. Entre anécdotas de eventos, consejos y dándonos una mano para mejorar, nos dimos cuenta de que funcionamos mejor como equipo.
+                desc: `Somos amigas hace 9 años y la fotografía siempre fue el tema de nuestras charlas. Entre anécdotas de eventos y dándonos una mano para mejorar, nos dimos cuenta de que funcionamos mejor como equipo.
 
-Esa confianza de años es lo que hoy nos permite laburar juntas en Nuestra Mirada. Nos entendemos sin hablar y compartimos el mismo objetivo: que cada entrega tenga ese nivel de detalle y calidad que buscamos desde que empezamos.
-
-Hacé clic en nuestras fotos para conocernos un poco más.` 
+Esa confianza es lo que hoy nos permite laburar juntas en Nuestra Mirada. Nos entendemos sin hablar y compartimos el mismo objetivo: que cada entrega tenga el nivel de detalle y calidad que buscamos desde que empezamos.` 
             }
         };
 
-function seleccionarPerfil(persona) {
-    const titulo = document.getElementById('titulo-perfil');
-    const desc = document.getElementById('desc-perfil');
-    const panel = document.getElementById('panel-info');
-    const btnReset = document.getElementById('btn-reset');
+        function seleccionarPerfil(persona) {
+            const titulo = document.getElementById('titulo-perfil');
+            const desc = document.getElementById('desc-perfil');
+            const panel = document.getElementById('panel-info');
+            const btnReset = document.getElementById('btn-reset');
 
-    // Primero ocultamos el contenido
-    panel.style.opacity = '0';
-    
-    setTimeout(() => {
-        // Cambiamos el texto (aquí el box se va a auto-ajustar solo)
-        titulo.innerText = infoPerfiles[persona].titulo;
-        desc.innerText = infoPerfiles[persona].desc;
-        
-        // Volvemos a mostrar con el nuevo tamaño
-        panel.style.opacity = '1';
-        if(persona !== 'reset') btnReset.classList.add('visible');
-    }, 200); // Un pelín más de tiempo para que la transición sea fluida
+            panel.style.opacity = '0';
+            setTimeout(() => {
+                titulo.innerText = infoPerfiles[persona].titulo;
+                desc.innerText = infoPerfiles[persona].desc;
+                panel.style.opacity = '1';
+                btnReset.classList.add('visible');
+            }, 150);
 
-    document.querySelectorAll('.foto-burbuja').forEach(b => b.classList.remove('activa'));
-    if(persona !== 'reset') document.getElementById(`burbuja-${persona}`).classList.add('activa');
-}
+            document.querySelectorAll('.foto-burbuja').forEach(b => b.classList.remove('activa'));
+            document.getElementById(`burbuja-${persona}`).classList.add('activa');
+        }
+
         function resetPerfil() {
             const titulo = document.getElementById('titulo-perfil');
             const desc = document.getElementById('desc-perfil');
             const btnReset = document.getElementById('btn-reset');
+            const panel = document.getElementById('panel-info');
 
-            titulo.innerText = infoPerfiles['reset'].titulo;
-            desc.innerText = infoPerfiles['reset'].desc;
-            btnReset.classList.remove('visible');
+            panel.style.opacity = '0';
+            setTimeout(() => {
+                titulo.innerText = infoPerfiles['reset'].titulo;
+                desc.innerText = infoPerfiles['reset'].desc;
+                panel.style.opacity = '1';
+                btnReset.classList.remove('visible');
+            }, 150);
+            
             document.querySelectorAll('.foto-burbuja').forEach(b => b.classList.remove('activa'));
         }
 
-        /* --- GRILLA DINÁMICA --- */
         const cloudName = "nuestramirada";
         const categorias = [
             { id: 'Casamientos', sub: 'HISTORIAS DE AMOR', url: 'galeria-casamientos.html' },
