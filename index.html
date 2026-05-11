@@ -68,35 +68,25 @@
         .card-content h3 { margin: 0; font-size: 1.5em; text-transform: uppercase; letter-spacing: 2px; color: white; }
         .card-content p { margin: 5px 0 0; font-size: 0.75em; color: #3498db; font-weight: 600; }
 
-        /* --- VISTA CELULAR (Ara arriba, texto a la derecha) --- */
+        /* --- VISTA CELULAR REORDENADA --- */
         @media (max-width: 768px) {
             header h1 { font-size: 2.2em; letter-spacing: 4px; }
-            header .subtitulo-header { font-size: 0.85em; }
-
             .sobre-nosotras-interactiva { 
                 display: grid;
                 grid-template-columns: 85px 1fr; 
                 grid-template-areas: 
                     "foto-ara texto"
                     "foto-agus texto";
-                gap: 15px;
-                padding: 0 15px;
-                align-items: center;
+                gap: 15px; padding: 0 15px; align-items: center;
             }
-
-            /* Asignamos las áreas del grid */
             #agus-wrapper { grid-area: foto-agus; }
             #ara-wrapper { grid-area: foto-ara; }
             #panel-info { 
-                grid-area: texto; 
-                text-align: left; 
-                padding: 25px 20px;
-                max-width: 100%;
-                border-radius: 20px;
+                grid-area: texto; text-align: left; 
+                padding: 25px 20px; max-width: 100%; border-radius: 20px;
             }
-
             .foto-burbuja { width: 75px; height: 75px; }
-            #titulo-perfil { font-size: 1.2em; color: white; } /* Blanco en celu por defecto */
+            #titulo-perfil { font-size: 1.2em; color: white; } 
             #desc-perfil { font-size: 0.82em; line-height: 1.6; }
         }
     </style>
@@ -124,7 +114,7 @@
                 <h3 id="titulo-perfil">Sobre Nosotras</h3>
                 <p id="desc-perfil">Somos amigas hace 9 años y la fotografía siempre fue el tema de nuestras charlas. Entre anécdotas de eventos y dándonos una mano para mejorar, nos dimos cuenta de que funcionamos mejor como equipo.
 
-Esa confianza es lo que hoy nos permite laburar juntas en Nuestra Mirada. Nos entendemos sin hablar y compartimos el mismo objetivo: que cada entrega tenga el nivel de calidad que buscamos desde que empezamos.</p>
+Esa confianza es lo que hoy nos permite laburar juntas en Nuestra Mirada. Nos entendemos sin hablar y compartimos el mismo objetivo: que cada entrega tenga el nivel de detalle y calidad que buscamos desde que empezamos.</p>
             </div>
 
             <div class="perfil-wrapper" id="ara-wrapper">
@@ -141,15 +131,25 @@ Esa confianza es lo que hoy nos permite laburar juntas en Nuestra Mirada. Nos en
         const infoPerfiles = {
             'agus': { 
                 titulo: 'AGUSTINA VALDERRAMA', 
-                desc: 'Mi conexión con la fotografía empezó mirando cajas llenas de fotos. Ahí entendí que no eran simples papeles sino tesoros que te permiten viajar en el tiempo.\n\nDurante años fue un hobby hasta que hace 6 años hice mi primer evento. Busco que cada imagen no solo muestre un momento, sino que permita volver a sentirlo.' 
+                desc: `Mi conexión con la fotografía empezó antes de tener una cámara, empezó en mi casa mirando una caja llena de fotos donde podía pasar horas observando momentos congelados, intentando entender historias, vínculos y todo lo que había detrás de cada imagen, y fue ahí donde entendí que no eran simples papeles sino tesoros que te permiten viajar en el tiempo y volver a lugares, personas y emociones que de otra forma se perderían.
+
+Con el tiempo tuve la necesidad propia de crear mis propios tesoros, de capturar lo que vivo y lo que pasa a mi alrededor, durante años fue un hobby hasta que hace 6 años hice mi primer evento y pude ser parte de la construcción de esos momentos para otras personas.
+
+Hoy trabajo desde la conexión con las personas a estar presente sin invadir y a registrar lo que realmente importa, y a través de mi proyecto (en conjunto con mi pareja Alejandro) Instantes en Click comparto esta mirada y todo lo que construyo en cada evento, busco que cada imagen no solo muestre un momento sino que permita volver a sentirlo, porque al final lo importante no es solo lo que se ve sino lo que queda de esos momentos` 
             },
             'ara': { 
                 titulo: 'ARACELI VILLALBA', 
-                desc: 'Empecé de chica, jugando con la cámara de mi viejo. Heredé esa obsesión por documentar el paso del tiempo.\n\nHoy, con 10 años de experiencia, entiendo que mi rol es ser una observadora silenciosa. Mi prioridad es que disfrutes con libertad mientras yo guardo el instante.' 
+                desc: `Empecé de chica, jugando con la cámara de rollo de mi viejo. Me acuerdo de quedarme mirando por el lente; me flasheaba cómo ese cuadradito hacía que todo se viera más grande y nítido. Lo veía a él buscando la mejor toma en cada acto del colegio y, sin darme cuenta, me quedó ese chip de querer guardar todo.
+
+Después seguí con el celular, sacándole fotos a cualquier cosa, hasta que con mi primer laburo me pude comprar mi primera cámara. Ahí me metí de lleno: hice cursos de foto artística, digital y no paré más. Mis amigos fueron mis primeros modelos, y así llegaron los primeros eventos.
+
+Hoy, con 10 años de experiencia, lo que más me gusta es eso: estar ahí, capturar el momento clave y que ustedes se olviden de que yo estoy, para que después tengan ese recuerdo guardado para siempre.` 
             },
             'reset': { 
                 titulo: 'Sobre Nosotras', 
-                desc: 'Somos amigas hace 9 años y la fotografía siempre fue el tema de nuestras charlas. Entre anécdotas de eventos y dándonos una mano para mejorar, nos dimos cuenta de que funcionamos mejor como equipo.\n\nEsa confianza es lo que hoy nos permite laburar juntas en Nuestra Mirada.' 
+                desc: `Somos amigas hace 9 años y la fotografía siempre fue el tema de nuestras charlas. Entre anécdotas de eventos y dándonos una mano para mejorar, nos dimos cuenta de que funcionamos mejor como equipo.
+
+Esa confianza es lo que hoy nos permite laburar juntas en Nuestra Mirada. Nos entendemos sin hablar y compartimos el mismo objetivo: que cada entrega tenga el nivel de detalle y calidad que buscamos desde que empezamos.` 
             }
         };
 
@@ -186,7 +186,6 @@ Esa confianza es lo que hoy nos permite laburar juntas en Nuestra Mirada. Nos en
             document.querySelectorAll('.foto-burbuja').forEach(b => b.classList.remove('activa'));
         }
 
-        /* --- LOGICA DE LA GRILLA --- */
         const cloudName = "nuestramirada";
         const categorias = [
             { id: 'Casamientos', sub: 'HISTORIAS DE AMOR', url: 'galeria-casamientos.html' },
