@@ -7,7 +7,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     
     <style>
-        /* --- ESTILOS BASE (Web/General) --- */
+        /* --- ESTILOS GENERALES --- */
         body { margin: 0; padding: 0; background-color: #0a0a0a; color: white; font-family: 'Poppins', sans-serif; overflow-x: hidden; }
         .fondo-3d { position: fixed; width: 100vw; height: 100vh; top: 0; left: 0; z-index: -1; filter: blur(80px); opacity: 0.5; }
         .circulo { position: absolute; border-radius: 50%; }
@@ -56,55 +56,48 @@
         #btn-reset { position: absolute; top: 15px; right: 20px; background: none; border: none; color: white; font-size: 1.2em; cursor: pointer; opacity: 0; transition: 0.3s; }
         #btn-reset.visible { opacity: 0.5; }
 
-        #titulo-perfil { margin: 0 0 15px 0; font-size: 1.8em; letter-spacing: 3px; text-transform: uppercase; color: white; }
+        #titulo-perfil { margin: 0 0 15px 0; font-size: 1.8em; letter-spacing: 3px; text-transform: uppercase; color: white; transition: color 0.3s; }
         #desc-perfil { margin: 0; font-size: 0.95em; line-height: 1.8; opacity: 0.9; white-space: pre-line; }
 
-        /* --- GRILLA Y OTROS --- */
+        /* --- GRILLA DE CATEGORÍAS --- */
         .grid-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px; padding: 0 50px 80px; max-width: 1400px; margin: 0 auto; }
         .categoria-card { position: relative; height: 400px; border-radius: 30px; overflow: hidden; background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(15px); border: 1px solid rgba(255, 255, 255, 0.1); text-decoration: none; display: block; transition: 0.5s; }
-        .card-content { position: absolute; bottom: 0; left: 0; width: 100%; padding: 30px; background: linear-gradient(to top, rgba(0,0,0,0.9), transparent); box-sizing: border-box; }
+        .categoria-card:hover { transform: translateY(-10px); border-color: rgba(255,255,255,0.4); }
         .card-img { width: 100%; height: 100%; object-fit: cover; position: absolute; top: 0; left: 0; z-index: -1; opacity: 0.4; }
+        .card-content { position: absolute; bottom: 0; left: 0; width: 100%; padding: 30px; background: linear-gradient(to top, rgba(0,0,0,0.9), transparent); box-sizing: border-box; }
+        .card-content h3 { margin: 0; font-size: 1.5em; text-transform: uppercase; letter-spacing: 2px; color: white; }
+        .card-content p { margin: 5px 0 0; font-size: 0.75em; color: #3498db; font-weight: 600; }
 
-        /* --- SOLO PARA CELULAR (Magia de reordenamiento) --- */
+        /* --- VISTA CELULAR (Ara arriba, texto a la derecha) --- */
         @media (max-width: 768px) {
             header h1 { font-size: 2.2em; letter-spacing: 4px; }
-            
+            header .subtitulo-header { font-size: 0.85em; }
+
             .sobre-nosotras-interactiva { 
-                flex-wrap: wrap; /* Permite que los elementos se muevan */
-                justify-content: flex-start;
+                display: grid;
+                grid-template-columns: 85px 1fr; 
+                grid-template-areas: 
+                    "foto-ara texto"
+                    "foto-agus texto";
                 gap: 15px;
                 padding: 0 15px;
+                align-items: center;
             }
 
-            /* Reordenamos con la propiedad 'order' */
-            #agus-wrapper { order: 1; }
-            #ara-wrapper { order: 2; margin-left: 0; }
+            /* Asignamos las áreas del grid */
+            #agus-wrapper { grid-area: foto-agus; }
+            #ara-wrapper { grid-area: foto-ara; }
             #panel-info { 
-                order: 3; 
-                flex: 1 1 100%; /* El texto ocupa todo el ancho */
+                grid-area: texto; 
                 text-align: left; 
                 padding: 25px 20px;
                 max-width: 100%;
+                border-radius: 20px;
             }
 
-            /* Ajuste de burbujas para que queden a la izquierda en columna */
- .sobre-nosotras-interactiva {
-                display: grid;
-                grid-template-columns: 80px 1fr; /* Columna fija para fotos y el resto texto */
-                grid-template-areas: 
-                    "foto2 texto"  /* <-- CAMBIAMOS EL ORDEN AQUÍ: Foto 2 (Ara) arriba */
-                    "foto1 texto"; /* <-- Foto 1 (Agus) abajo */
-                align-items: center; /* Centra las fotos verticalmente en su espacio */
-                gap: 10px; /* Unir un poco más las piezas en celu */
-            }
-
-            #agus-wrapper { grid-area: foto1; }
-            #ara-wrapper { grid-area: foto2; }
-            #panel-info { grid-area: texto; min-height: 200px; }
-
-            .foto-burbuja { width: 70px; height: 70px; }
-            #titulo-perfil { font-size: 1.2em; }
-            #desc-perfil { font-size: 0.82em; }
+            .foto-burbuja { width: 75px; height: 75px; }
+            #titulo-perfil { font-size: 1.2em; color: white; } /* Blanco en celu por defecto */
+            #desc-perfil { font-size: 0.82em; line-height: 1.6; }
         }
     </style>
 </head>
@@ -145,11 +138,19 @@ Esa confianza es lo que hoy nos permite laburar juntas en Nuestra Mirada. Nos en
     <div class="grid-container" id="grid-categorias"></div>
 
     <script>
-        // Los perfiles y funciones se mantienen iguales
         const infoPerfiles = {
-            'agus': { titulo: 'AGUSTINA VALDERRAMA', desc: 'Mi conexión con la fotografía empezó mirando cajas llenas de fotos. Ahí entendí que no eran simples papeles sino tesoros que te permiten viajar en el tiempo...' },
-            'ara': { titulo: 'ARACELI VILLALBA', desc: 'Empecé de chica, jugando con la cámara de mi viejo. Mi prioridad es que disfrutes con libertad mientras yo guardo el instante.' },
-            'reset': { titulo: 'Sobre Nosotras', desc: 'Somos amigas hace 9 años y la fotografía siempre fue el tema de nuestras charlas...' }
+            'agus': { 
+                titulo: 'AGUSTINA VALDERRAMA', 
+                desc: 'Mi conexión con la fotografía empezó mirando cajas llenas de fotos. Ahí entendí que no eran simples papeles sino tesoros que te permiten viajar en el tiempo.\n\nDurante años fue un hobby hasta que hace 6 años hice mi primer evento. Busco que cada imagen no solo muestre un momento, sino que permita volver a sentirlo.' 
+            },
+            'ara': { 
+                titulo: 'ARACELI VILLALBA', 
+                desc: 'Empecé de chica, jugando con la cámara de mi viejo. Heredé esa obsesión por documentar el paso del tiempo.\n\nHoy, con 10 años de experiencia, entiendo que mi rol es ser una observadora silenciosa. Mi prioridad es que disfrutes con libertad mientras yo guardo el instante.' 
+            },
+            'reset': { 
+                titulo: 'Sobre Nosotras', 
+                desc: 'Somos amigas hace 9 años y la fotografía siempre fue el tema de nuestras charlas. Entre anécdotas de eventos y dándonos una mano para mejorar, nos dimos cuenta de que funcionamos mejor como equipo.\n\nEsa confianza es lo que hoy nos permite laburar juntas en Nuestra Mirada.' 
+            }
         };
 
         function seleccionarPerfil(persona) {
@@ -161,7 +162,7 @@ Esa confianza es lo que hoy nos permite laburar juntas en Nuestra Mirada. Nos en
             setTimeout(() => {
                 titulo.innerText = infoPerfiles[persona].titulo;
                 desc.innerText = infoPerfiles[persona].desc;
-                titulo.style.color = "#3498db"; // Cambia a azul al seleccionar
+                titulo.style.color = "#3498db"; 
                 panel.style.opacity = '1';
                 btnReset.classList.add('visible');
             }, 150);
@@ -178,16 +179,40 @@ Esa confianza es lo que hoy nos permite laburar juntas en Nuestra Mirada. Nos en
             setTimeout(() => {
                 titulo.innerText = infoPerfiles['reset'].titulo;
                 desc.innerText = infoPerfiles['reset'].desc;
-                titulo.style.color = "white"; // Vuelve a blanco en el reset
+                titulo.style.color = "white"; 
                 panel.style.opacity = '1';
                 btnReset.classList.remove('visible');
             }, 150);
             document.querySelectorAll('.foto-burbuja').forEach(b => b.classList.remove('activa'));
         }
 
-        // Grilla (se mantiene el código que ya tenías)
+        /* --- LOGICA DE LA GRILLA --- */
+        const cloudName = "nuestramirada";
+        const categorias = [
+            { id: 'Casamientos', sub: 'HISTORIAS DE AMOR', url: 'galeria-casamientos.html' },
+            { id: 'Quinces', sub: 'MOMENTOS INOLVIDABLES', url: 'galeria-quinces.html' },
+            { id: 'Fotoproducto', sub: 'BRANDING VISUAL', url: 'galeria-branding.html' },
+            { id: 'Infantiles', sub: 'PEQUEÑAS HISTORIAS', url: 'galeria-infantiles.html' },
+            { id: 'Amores_peludos', sub: 'MASCOTAS', url: 'galeria-mascotas.html' },
+            { id: 'Books', sub: 'SESIONES PERSONALES', url: 'galeria-books.html' },
+            { id: 'Cumpleaños', sub: 'CELEBRACIONES', url: 'galeria-cumpleanos.html' },
+            { id: 'Recibidas', sub: 'LOGROS ALCANZADOS', url: 'galeria-recibidas.html' }
+        ];
+
         const grid = document.getElementById('grid-categorias');
-        // ... (resto del JS de la grilla)
+        categorias.forEach(cat => {
+            const num = Math.floor(Math.random() * 20) + 1;
+            const autor = (num % 2 !== 0) ? "Agus" : "Ara";
+            const nombreFoto = `${cat.id}_${autor}_${num}.jpg`;
+            const card = document.createElement('a');
+            card.href = cat.url;
+            card.className = 'categoria-card';
+            card.innerHTML = `
+                <img src="https://res.cloudinary.com/${cloudName}/image/upload/f_auto,q_auto/${nombreFoto}" class="card-img" alt="${cat.id}" onerror="this.src='https://res.cloudinary.com/${cloudName}/image/upload/f_auto,q_auto/${cat.id}_Agus_1.jpg'">
+                <div class="card-content"><h3>${cat.id.replace('_', ' ')}</h3><p>${cat.sub}</p></div>
+            `;
+            grid.appendChild(card);
+        });
     </script>
 </body>
 </html>
